@@ -4,17 +4,10 @@ import signupImg from "../assets/undraw_join_re_w1lh.svg";
 import { Card, Button } from "antd";
 import { Link } from "react-router-dom";
 
-const onFinish = (values: any) => {
-  console.log("Success:", values);
-};
-
-const onFinishFailed = (errorInfo: any) => {
-  console.log("Failed:", errorInfo);
-};
-
 export default function Signup() {
   return (
     <>
+      {/* <Navbar /> */}
       <div className="signup_page">
         <div className="signup_left">
           <img src={signupImg} />

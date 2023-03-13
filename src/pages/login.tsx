@@ -1,6 +1,6 @@
 import * as React from "react";
-import "./signup.css";
-import signupImg from "../assets/undraw_join_re_w1lh.svg";
+// import "../components/signup.css";
+// import signupImg from "../assets/undraw_join_re_w1lh.svg";
 import { Card, Button } from "antd";
 
 const onFinish = (values: any) => {
@@ -15,9 +15,7 @@ export default function Login() {
   return (
     <>
       <div className="signup_page">
-        <div className="signup_left">
-          <img src={signupImg} />
-        </div>
+        <div className="signup_left">{/* <img src={signupImg} /> */}</div>
         <div className="signup_box">
           <Card className="signup_login_card">
             {/* <h1>Sign up</h1> */}
