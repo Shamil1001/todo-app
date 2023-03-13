@@ -1,0 +1,48 @@
+.signup_page{
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.signup_left{
+    width: 50%;
+}
+.signup_box{
+    width: 50%;
+    display: flex;
+    align-items: center;
+}
+.signup_login_card{
+    width: 50%;
+    
+}
+
+.card_buttons{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.signup_btn{
+    color: white;
+    background: #4D47C3;
+    width: 50%;
+    height: 40px;border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.signup_btn:hover{
+    color: white;
+    background: #645fd4;
+}
+
+h2{
+    color: white;
+}

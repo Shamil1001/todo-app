@@ -1,11 +1,25 @@
 import { useState } from "react";
 import Navbar from "./components/navbar";
+import Signup from "./components/signup";
+import Main from "./pages/home";
+import Register from "./pages/register";
+import Login from "./pages/login";
 import "./App.css";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
-      <Navbar />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Router>
+
+      {/* <Navbar />
+      <Signup /> */}
     </div>
   );
 }

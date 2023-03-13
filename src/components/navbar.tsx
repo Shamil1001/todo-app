@@ -1,11 +1,12 @@
 import * as React from "react";
+import "./navbar.css";
 
 export default function Navbar() {
   return (
     <>
-      <h2>Navbar</h2>
-      <h3>n</h3>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      <div className="nav_title">
+        <p className="todo_title">Todo List App</p>
+      </div>
     </>
   );
 }

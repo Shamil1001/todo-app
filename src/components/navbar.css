@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'Changa One';
+    src: url('../assets/Changa_One/ChangaOne-Regular.ttf') format('truetype');
+  }
+
+.todo_title{
+    font-size: 48px;
+    font-weight: 900;
+    color: #ffff;
+    font-family: Changa One;
+    padding: 20px;
+
+}
