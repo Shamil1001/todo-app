@@ -14,7 +14,7 @@ const onFinishFailed = (errorInfo: any) => {
 export default function Login() {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className="register_main">
         <Card className="register_form">
           <Form

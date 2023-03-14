@@ -10,7 +10,7 @@ export default function Signup() {
       {/* <Navbar /> */}
       <div className="signup_page">
         <div className="signup_left">
-          <img src={signupImg} />
+          <img className="signup_left_svg" src={signupImg} />
         </div>
         <div className="signup_box">
           <Card className="signup_login_card">

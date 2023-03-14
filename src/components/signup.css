@@ -7,6 +7,11 @@
 
 .signup_left{
     width: 50%;
+    
+}
+.signup_left_svg{
+    margin: 5%;
+    height: 70%;
 }
 .signup_box{
     width: 50%;
