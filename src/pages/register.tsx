@@ -1,20 +1,43 @@
-import * as React from "react";
+import { ChangeEvent, useState } from "react";
 import "../components/signup";
 import Navbar from "../components/navbar";
 import "./register.css";
 import { Card } from "antd";
 import { Button, Checkbox, Form, Input } from "antd";
-import { Link } from "react-router-dom";
-
-const onFinish = (values: any) => {
-  console.log("Success:", values);
-};
-
-const onFinishFailed = (errorInfo: any) => {
-  console.log("Failed:", errorInfo);
-};
+import { Link, useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../firebase";
 
 export default function Register() {
+  const [regEmail, setRegEmail] = useState("");
+  const [regPassword, setRegPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const onFinish = (values: any) => {
+    console.log("Success:", values);
+  };
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+  };
+
+  const handleRegEmail = (event: ChangeEvent<HTMLInputElement>) => {
+    setRegEmail(event.target.value);
+  };
+
+  const handleRegPassword = (event: ChangeEvent<HTMLInputElement>) => {
+    setRegPassword(event.target.value);
+  };
+
+  const handleRegister = () => {
+    createUserWithEmailAndPassword(auth, regEmail, regPassword)
+      .then(() => {
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
       <Navbar />
@@ -37,7 +60,7 @@ export default function Register() {
                 { required: true, message: "Please input your username!" },
               ]}
             >
-              <Input />
+              <Input onChange={handleRegEmail} value={regEmail} />
             </Form.Item>
 
             <Form.Item
@@ -47,11 +70,16 @@ export default function Register() {
                 { required: true, message: "Please input your password!" },
               ]}
             >
-              <Input.Password />
+              <Input.Password
+                onChange={handleRegPassword}
+                // ref={passwordRef}
+                type="password"
+                value={regPassword}
+              />
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button type="primary" htmlType="submit">
+              <Button onClick={handleRegister} type="primary" htmlType="submit">
                 Submit
               </Button>
             </Form.Item>
