@@ -4,6 +4,7 @@ import Navbar from "../components/navbar";
 import "./register.css";
 import { Card } from "antd";
 import { Button, Checkbox, Form, Input } from "antd";
+import { Link } from "react-router-dom";
 
 const onFinish = (values: any) => {
   console.log("Success:", values);
@@ -54,6 +55,9 @@ export default function Register() {
                 Submit
               </Button>
             </Form.Item>
+            <Link to="/">
+              <p>Go back</p>
+            </Link>
           </Form>
         </Card>
       </div>

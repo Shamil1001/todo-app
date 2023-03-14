@@ -13,3 +13,21 @@
     background-color: #9AA7EC;
     height: 100vh;
 }
+
+.home_page{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.signup_left{
+    width: 50%;
+}
+
+.signup_left .signup_left_svg{
+    margin: 10% 15%;
+    height: 70%;
+}
+
+.home_login{
+    width: 100%;
+}

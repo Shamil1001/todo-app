@@ -12,7 +12,9 @@ function Main() {
         <div className="signup_left">
           <img className="signup_left_svg" src={signupImg} />
         </div>
-        <Login />
+        <div className="home_login">
+          <Login />
+        </div>
       </div>
       {/* <Signup /> */}
     </div>
