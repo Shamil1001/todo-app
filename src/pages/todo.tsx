@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa";
-// import useState from 'react';
+import { uid } from "uid";
+import { v4 as uuidv4 } from "uuid";
+import { set, ref } from "firebase/database";
 
 export default function Todo() {
   const navigate = useNavigate();
@@ -24,6 +26,16 @@ export default function Todo() {
       })
       .catch((err) => alert(err.message));
   };
+
+  const writeToDatabase = () => {
+    const uidd = uuidv4();
+    set(ref(db, `/${auth.currentUser.uid}/${uidd}`), {
+      todo: todo,
+      uid: uidd,
+    });
+    setTodo("");
+  };
+
   return (
     <>
       <div className="todo_list_page">
@@ -38,7 +50,7 @@ export default function Todo() {
             onChange={(e) => setTodo(e.target.value)}
             value={todo}
           />
-          <button>Add</button>
+          <button onClick={writeToDatabase}>Add</button>
         </div>
 
         <div></div>
