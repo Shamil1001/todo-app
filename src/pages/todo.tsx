@@ -3,14 +3,16 @@ import { signOut } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { FaSignOutAlt } from "react-icons/fa";
-import { uid } from "uid";
 import { v4 as uuidv4 } from "uuid";
-import { set, ref, onValue } from "firebase/database";
+import { set, ref, onValue, remove, update } from "firebase/database";
+import { uid } from "uid";
 
 export default function Todo() {
   const navigate = useNavigate();
-  const [todo, setTodo] = useState<string>("");
+  const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([]);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [tempUid, setTempUid] = useState<string>("");
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -19,7 +21,7 @@ export default function Todo() {
           setTodos([]);
           const data = snapshot.val();
           if (data !== null) {
-            Object.values(data).map((todo) => {
+            Object.values(data).forEach((todo) => {
               setTodos((prev) => [...prev, todo]);
             });
           }
@@ -47,7 +49,29 @@ export default function Todo() {
       });
       setTodo("");
     }
-    setTodo("");
+  };
+
+  const handleDelete = (uid: any) => {
+    remove(ref(db, `/${auth.currentUser?.uid}/${uid}`));
+  };
+
+  const handleUpdate = (todo: any) => {
+    setIsEdit(true);
+    if (todo) {
+      setTodo(todo.todo);
+      setTempUid(todo.uid);
+    }
+  };
+
+  const handleEditComfirm = () => {
+    if (todo) {
+      update(ref(db, `/${auth.currentUser?.uid}/${tempUid}`), {
+        todo: todo,
+        uid: tempUid,
+      });
+      // setIsEdit(false);
+      setTodo("");
+    }
   };
 
   return (
@@ -64,12 +88,24 @@ export default function Todo() {
             onChange={(e) => setTodo(e.target.value)}
             value={todo}
           />
-          <button onClick={writeToDatabase}>Add</button>
+          {isEdit ? (
+            <div>
+              <button onClick={handleEditComfirm}>Confirm</button>
+            </div>
+          ) : (
+            <div>
+              <button onClick={writeToDatabase}>Add</button>
+            </div>
+          )}
         </div>
 
         <div className="ttodo">
-          {todos.map((todo, index) => (
-            <h3 key={index}>{todo.todo}</h3>
+          {todos.map((todo: any, index) => (
+            <div key={index}>
+              <h3>{todo.todo}</h3>
+              <button onClick={() => handleDelete(todo.uid)}>Delete</button>
+              <button onClick={() => handleUpdate(todo)}>Edit</button>
+            </div>
           ))}
         </div>
       </div>
