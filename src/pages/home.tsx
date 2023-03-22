@@ -9,9 +9,9 @@ function Main() {
     <div className="App">
       <Navbar />
       <div className="home_page">
-        <div className="signup_left">
+        {/* <div className="signup_left">
           <img className="signup_left_svg" src={signupImg} />
-        </div>
+        </div> */}
         <div className="home_login">
           <Login />
         </div>

@@ -2,15 +2,20 @@ import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import { FaSignOutAlt } from "react-icons/fa";
+import { AiOutlineLogout } from "react-icons/ai";
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
 import { set, ref, onValue, remove, update } from "firebase/database";
 import { uid } from "uid";
+import "./todo.css";
+import { Input, Button, Card, Space, Checkbox } from "antd";
+import type { CheckboxChangeEvent } from "antd/es/checkbox";
 
 export default function Todo() {
   const navigate = useNavigate();
   const [todo, setTodo] = useState("");
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState<Todo[]>([]);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [tempUid, setTempUid] = useState<string>("");
 
@@ -74,39 +79,70 @@ export default function Todo() {
     }
   };
 
+  const onCheck = (e: CheckboxChangeEvent) => {
+    console.log(`checked = ${e.target.checked}`);
+  };
+
   return (
     <>
       <div className="todo_list_page">
         <div className="todo_nav">
-          <span onClick={handleSignOut}>
-            <FaSignOutAlt />
+          <span className="logout_icon" onClick={handleSignOut}>
+            <AiOutlineLogout />
           </span>
+          <label>Log out</label>
         </div>
         <div className="todo_container">
-          <input
-            type="text"
-            onChange={(e) => setTodo(e.target.value)}
-            value={todo}
-          />
-          {isEdit ? (
-            <div>
-              <button onClick={handleEditComfirm}>Confirm</button>
-            </div>
-          ) : (
-            <div>
-              <button onClick={writeToDatabase}>Add</button>
-            </div>
-          )}
-        </div>
+          <div className="todo_input">
+            <Input
+              type="text"
+              onChange={(e) => setTodo(e.target.value)}
+              value={todo}
+            />
+            {isEdit ? (
+              <div>
+                <Button type="primary" onClick={handleEditComfirm}>
+                  Confirm
+                </Button>
+              </div>
+            ) : (
+              <div>
+                <Button type="primary" onClick={writeToDatabase}>
+                  Add
+                </Button>
+              </div>
+            )}
+          </div>
 
-        <div className="ttodo">
-          {todos.map((todo: any, index) => (
-            <div key={index}>
-              <h3>{todo.todo}</h3>
-              <button onClick={() => handleDelete(todo.uid)}>Delete</button>
-              <button onClick={() => handleUpdate(todo)}>Edit</button>
-            </div>
-          ))}
+          <div className="todo_list">
+            <Space>
+              <Card>
+                {todos.map((todo: any, index) => (
+                  <div className="todo_list_items" key={index}>
+                    {/* <Checkbox onChange={onCheck}></Checkbox> */}
+                    <h3>{todo.todo}</h3>
+                    <div className="delete_edit">
+                      <Button
+                        danger
+                        type="primary"
+                        onClick={() => handleDelete(todo.uid)}
+                      >
+                        <MdOutlineDeleteOutline className="delete_icon" />
+                        {/* <span>Delete</span> */}
+                      </Button>
+                      <Button
+                        className="edit_btn"
+                        onClick={() => handleUpdate(todo)}
+                      >
+                        <FaEdit className="edit_icon" />
+                        {/* Edit */}
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </Card>
+            </Space>
+          </div>
         </div>
       </div>
     </>
