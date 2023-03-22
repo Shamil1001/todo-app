@@ -18,6 +18,7 @@ export default function Todo() {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [tempUid, setTempUid] = useState<string>("");
+  // const [checked, setChecked]
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -79,8 +80,8 @@ export default function Todo() {
     }
   };
 
-  const onCheck = (e: CheckboxChangeEvent) => {
-    console.log(`checked = ${e.target.checked}`);
+  const onCheck = (todo: any) => {
+    console.log(todo);
   };
 
   return (
@@ -95,6 +96,7 @@ export default function Todo() {
         <div className="todo_container">
           <div className="todo_input">
             <Input
+              className="add_input_form"
               type="text"
               onChange={(e) => setTodo(e.target.value)}
               value={todo}
@@ -119,7 +121,7 @@ export default function Todo() {
               <Card>
                 {todos.map((todo: any, index) => (
                   <div className="todo_list_items" key={index}>
-                    {/* <Checkbox onChange={onCheck}></Checkbox> */}
+                    {/* <Checkbox onChange={() => onCheck(todo)}></Checkbox> */}
                     <h3>{todo.todo}</h3>
                     <div className="delete_edit">
                       <Button
@@ -131,6 +133,7 @@ export default function Todo() {
                         {/* <span>Delete</span> */}
                       </Button>
                       <Button
+                        type="ghost"
                         className="edit_btn"
                         onClick={() => handleUpdate(todo)}
                       >
