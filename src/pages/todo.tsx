@@ -12,13 +12,16 @@ import "./todo.css";
 import { Input, Button, Card, Space, Checkbox } from "antd";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
 
+interface Todos {
+  todo: string;
+}
+
 export default function Todo() {
   const navigate = useNavigate();
   const [todo, setTodo] = useState("");
-  const [todos, setTodos] = useState<Todo[]>([]);
+  const [todos, setTodos] = useState<Todos[]>([]);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [tempUid, setTempUid] = useState<string>("");
-  // const [checked, setChecked]
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -28,7 +31,7 @@ export default function Todo() {
           const data = snapshot.val();
           if (data !== null) {
             Object.values(data).forEach((todo) => {
-              setTodos((prev) => [...prev, todo]);
+              setTodos((prev: any) => [...prev, todo]);
             });
           }
         });
