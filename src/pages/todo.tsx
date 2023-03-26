@@ -11,6 +11,7 @@ import { uid } from "uid";
 import "./todo.css";
 import { Input, Button, Card, Space, Checkbox } from "antd";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
+import SecondPageNavbar from "../components/secondPageNav";
 
 interface Todos {
   todo: string;
@@ -78,7 +79,7 @@ export default function Todo() {
         todo: todo,
         uid: tempUid,
       });
-      // setIsEdit(false);
+      setIsEdit(false);
       setTodo("");
     }
   };
@@ -90,12 +91,13 @@ export default function Todo() {
   return (
     <>
       <div className="todo_list_page">
-        <div className="todo_nav">
-          <span className="logout_icon" onClick={handleSignOut}>
+        <SecondPageNavbar handleSignOut={handleSignOut} />
+        {/* <div className="todo_nav" onClick={handleSignOut}>
+          <span className="logout_icon">
             <AiOutlineLogout />
           </span>
           <label>Log out</label>
-        </div>
+        </div> */}
         <div className="todo_container">
           <div className="todo_input">
             <Input
@@ -121,7 +123,7 @@ export default function Todo() {
 
           <div className="todo_list">
             <Space>
-              <Card>
+              <Card style={{ minWidth: "20vw" }}>
                 {todos.map((todo: any, index) => (
                   <div className="todo_list_items" key={index}>
                     {/* <Checkbox onChange={() => onCheck(todo)}></Checkbox> */}

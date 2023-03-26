@@ -1,5 +1,5 @@
 .todo_list_page{
-    padding: 20px 40px;
+    /* padding: 20px 40px; */
 }
 
 .todo_nav{
@@ -26,6 +26,7 @@
     align-items: center;
     flex-direction: column;
     gap: 20px;
+    margin-top: 50px;
 
 }
 
@@ -40,6 +41,7 @@
 .todo_list{
     display: flex;
     flex-direction: column;
+    min-width: 250px;
     /* width: 15%; */
 }
 

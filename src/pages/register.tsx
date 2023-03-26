@@ -54,7 +54,7 @@ export default function Register() {
             autoComplete="off"
           >
             <Form.Item
-              label="Username"
+              label="Email"
               name="username"
               rules={[
                 { required: true, message: "Please input your username!" },
