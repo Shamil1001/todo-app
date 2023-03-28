@@ -65,8 +65,8 @@ export default function Login() {
 
           <Form
             name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 14 }}
             style={{ maxWidth: 600 }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
@@ -97,7 +97,7 @@ export default function Login() {
                 value={password}
               />
             </Form.Item>
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
               <Button onClick={handleLogin} type="primary" htmlType="submit">
                 Login
               </Button>
