@@ -43,10 +43,19 @@ export default function Register() {
       <Navbar />
       <div className="register_main">
         <Card className="register_form">
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "20px",
+            }}
+          >
+            <h1 style={{ color: "black" }}>Register</h1>
+          </div>
           <Form
             name="basic"
-            labelCol={{ span: 8 }}
-            wrapperCol={{ span: 16 }}
+            labelCol={{ span: 5 }}
+            wrapperCol={{ span: 14 }}
             style={{ maxWidth: 600 }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
@@ -55,17 +64,24 @@ export default function Register() {
           >
             <Form.Item
               label="Email"
+              labelCol={{ span: 0 }}
+              // wrapperCol={{ span: 14 }}
               name="username"
               rules={[
                 { required: true, message: "Please input your username!" },
               ]}
             >
-              <Input onChange={handleRegEmail} value={regEmail} />
+              <Input
+                style={{ marginLeft: "25px" }}
+                onChange={handleRegEmail}
+                value={regEmail}
+              />
             </Form.Item>
 
             <Form.Item
               label="Password"
               name="password"
+              labelCol={{ span: 0 }}
               rules={[
                 { required: true, message: "Please input your password!" },
               ]}
@@ -78,13 +94,20 @@ export default function Register() {
               />
             </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
               <Button onClick={handleRegister} type="primary" htmlType="submit">
                 Submit
               </Button>
             </Form.Item>
             <Link to="/">
-              <p>Go back</p>
+              <p
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                Already have account
+              </p>
             </Link>
           </Form>
         </Card>

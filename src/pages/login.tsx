@@ -76,16 +76,22 @@ export default function Login() {
             <Form.Item
               label="Email"
               name="email"
+              labelCol={{ span: 0 }}
               rules={[
                 { required: true, message: "Please input your username!" },
               ]}
             >
-              <Input onChange={handleLogEmail} value={email} />
+              <Input
+                style={{ marginLeft: "25px" }}
+                onChange={handleLogEmail}
+                value={email}
+              />
             </Form.Item>
 
             <Form.Item
               label="Password"
               name="password"
+              labelCol={{ span: 0 }}
               rules={[
                 { required: true, message: "Please input your password!" },
               ]}
