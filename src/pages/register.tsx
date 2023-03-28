@@ -11,6 +11,10 @@ import { auth } from "../firebase";
 export default function Register() {
   const [regEmail, setRegEmail] = useState("");
   const [regPassword, setRegPassword] = useState("");
+  const [registerInformation, setRegisterInformation] = useState({
+    password: "",
+    confirmPassword: "",
+  });
 
   const navigate = useNavigate();
 
@@ -31,11 +35,15 @@ export default function Register() {
   };
 
   const handleRegister = () => {
-    createUserWithEmailAndPassword(auth, regEmail, regPassword)
-      .then(() => {
-        navigate("/");
-      })
-      .catch((err) => console.log(err));
+    if (registerInformation.password !== registerInformation.confirmPassword) {
+      alert("Please, confirm that password  are the same");
+    } else {
+      createUserWithEmailAndPassword(auth, regEmail, regPassword)
+        .then(() => {
+          navigate("/");
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
@@ -87,10 +95,35 @@ export default function Register() {
               ]}
             >
               <Input.Password
-                onChange={handleRegPassword}
+                onChange={(e) =>
+                  setRegisterInformation({
+                    ...registerInformation,
+                    password: e.target.value,
+                  })
+                }
                 // ref={passwordRef}
                 type="password"
-                value={regPassword}
+                value={registerInformation.password}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Password2"
+              name="password2"
+              labelCol={{ span: 0 }}
+              rules={[
+                { required: true, message: "Please input your password!" },
+              ]}
+            >
+              <Input.Password
+                onChange={(e) =>
+                  setRegisterInformation({
+                    ...registerInformation,
+                    confirmPassword: e.target.value,
+                  })
+                }
+                // ref={passwordRef}
+                type="password"
+                value={registerInformation.confirmPassword}
               />
             </Form.Item>
 

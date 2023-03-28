@@ -9,6 +9,7 @@ import { auth } from "../firebase";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,7 +46,12 @@ export default function Login() {
         navigate("/todo");
         console.log("successssssssss");
       })
-      .catch((err) => console.log(err));
+      .catch((error) => {
+        setError("Email or password error");
+        // if (error.message == "Firebase: Error (auth/wrong-password).") {
+        // }
+      });
+    // console.log(error);
   };
 
   return (
@@ -103,6 +109,17 @@ export default function Login() {
                 value={password}
               />
             </Form.Item>
+            {error && (
+              <div
+                style={{
+                  color: "red",
+                  textAlign: "center",
+                  marginBottom: "10px",
+                }}
+              >
+                {error}
+              </div>
+            )}
             <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
               <Button onClick={handleLogin} type="primary" htmlType="submit">
                 Login
