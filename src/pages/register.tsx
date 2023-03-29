@@ -38,7 +38,11 @@ export default function Register() {
     if (registerInformation.password !== registerInformation.confirmPassword) {
       alert("Please, confirm that password  are the same");
     } else {
-      createUserWithEmailAndPassword(auth, regEmail, regPassword)
+      createUserWithEmailAndPassword(
+        auth,
+        regEmail,
+        registerInformation.password
+      )
         .then(() => {
           navigate("/");
         })
