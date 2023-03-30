@@ -30,10 +30,6 @@ export default function Register() {
     setRegEmail(event.target.value);
   };
 
-  const handleRegPassword = (event: ChangeEvent<HTMLInputElement>) => {
-    setRegPassword(event.target.value);
-  };
-
   const handleRegister = () => {
     if (registerInformation.password !== registerInformation.confirmPassword) {
       alert("Please, confirm that password  are the same");
@@ -77,14 +73,14 @@ export default function Register() {
             <Form.Item
               label="Email"
               labelCol={{ span: 0 }}
-              // wrapperCol={{ span: 14 }}
+              wrapperCol={{ span: 14 }}
               name="username"
               rules={[
                 { required: true, message: "Please input your username!" },
               ]}
             >
               <Input
-                style={{ marginLeft: "25px" }}
+                style={{ marginLeft: "30px" }}
                 onChange={handleRegEmail}
                 value={regEmail}
               />
@@ -99,6 +95,7 @@ export default function Register() {
               ]}
             >
               <Input.Password
+                style={{ marginLeft: "7px" }}
                 onChange={(e) =>
                   setRegisterInformation({
                     ...registerInformation,
@@ -133,7 +130,7 @@ export default function Register() {
 
             <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
               <Button onClick={handleRegister} type="primary" htmlType="submit">
-                Submit
+                Register
               </Button>
             </Form.Item>
             <Link to="/">
@@ -143,7 +140,7 @@ export default function Register() {
                   justifyContent: "center",
                 }}
               >
-                Already have account
+                Link to login page
               </p>
             </Link>
           </Form>
