@@ -12,13 +12,13 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigate("/todo");
-      }
-    });
-  }, []);
+  // useEffect(() => {
+  //   auth.onAuthStateChanged((user) => {
+  //     if (user) {
+  //       navigate("/todo");
+  //     }
+  //   });
+  // }, []);
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -48,10 +48,7 @@ export default function Login() {
       })
       .catch((error) => {
         setError("Email or password error");
-        // if (error.message == "Firebase: Error (auth/wrong-password).") {
-        // }
       });
-    // console.log(error);
   };
 
   return (

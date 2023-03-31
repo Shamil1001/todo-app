@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import "../components/signup";
 import Navbar from "../components/navbar";
 import "./register.css";
@@ -11,6 +11,7 @@ import { auth } from "../firebase";
 export default function Register() {
   const [regEmail, setRegEmail] = useState("");
   const [regPassword, setRegPassword] = useState("");
+  const [userError, setUserError] = useState("");
   const [registerInformation, setRegisterInformation] = useState({
     password: "",
     confirmPassword: "",
@@ -21,6 +22,22 @@ export default function Register() {
   const onFinish = (values: any) => {
     console.log("Success:", values);
   };
+
+  // auth.onAuthStateChanged((user) => {
+  //   if (user) {
+  //     console.log("userrrrrrrrr");
+  //     // navigate("/todo");
+  //   }
+  // });
+
+  // useEffect(() => {
+  //   auth.onAuthStateChanged((user) => {
+  //     if (user) {
+  //       console.log("userrrrrrrrr");
+  //       // navigate("/todo");
+  //     }
+  //   });
+  // }, []);
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
@@ -40,11 +57,36 @@ export default function Register() {
         registerInformation.password
       )
         .then(() => {
-          navigate("/");
+          navigate("/todo");
         })
-        .catch((err) => console.log(err));
+        .catch(() => {
+          console.log("User is already have");
+          setUserError("User is already registered");
+        });
     }
+    // else {
+    //   auth.onAuthStateChanged((user) => {
+    //     if (user) {
+    //       // User is already authenticated, do something
+    //       console.log(`User ${user.uid} is logged in`);
+    //     } else {
+    //       // User is not authenticated, do something
+    //       console.log('User is not logged in');
+    //     }
+    //   });
+    // }
   };
+  // else {
+  //   createUserWithEmailAndPassword(
+  //     auth,
+  //     regEmail,
+  //     registerInformation.password
+  //   )
+  //     .then(() => {
+  //       navigate("/");
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
 
   return (
     <>
@@ -127,6 +169,17 @@ export default function Register() {
                 value={registerInformation.confirmPassword}
               />
             </Form.Item>
+            {userError && (
+              <div
+                style={{
+                  color: "red",
+                  textAlign: "center",
+                  marginBottom: "10px",
+                }}
+              >
+                {userError}
+              </div>
+            )}
 
             <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
               <Button onClick={handleRegister} type="primary" htmlType="submit">
