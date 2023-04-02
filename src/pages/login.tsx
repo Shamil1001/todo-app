@@ -41,14 +41,18 @@ export default function Login() {
 
   const handleLogin = () => {
     console.log(email, password);
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        navigate("/todo");
-        console.log("successssssssss");
-      })
-      .catch((error) => {
-        setError("Email or password error");
-      });
+    if (email.length == 0 || password.length == 0) {
+      setError("Please, fill the blanks");
+    } else {
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          navigate("/todo");
+          console.log("successssssssss");
+        })
+        .catch((error) => {
+          setError("Email or password error");
+        });
+    }
   };
 
   return (
@@ -68,9 +72,9 @@ export default function Login() {
 
           <Form
             name="basic"
-            labelCol={{ span: 5 }}
+            labelCol={{ span: 0 }}
             wrapperCol={{ span: 14 }}
-            style={{ maxWidth: 600 }}
+            style={{ maxWidth: 600, width: "100%" }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
@@ -80,13 +84,13 @@ export default function Login() {
               label="Email"
               name="email"
               labelCol={{ span: 0 }}
-              rules={[
-                { required: true, message: "Please input your username!" },
-              ]}
+              wrapperCol={{ span: 18 }}
+              rules={[{ message: "Please input your username!" }]}
             >
               <Input
                 style={{ marginLeft: "25px" }}
                 onChange={handleLogEmail}
+                placeholder="berdi@gmail.com"
                 value={email}
               />
             </Form.Item>
@@ -95,14 +99,14 @@ export default function Login() {
               label="Password"
               name="password"
               labelCol={{ span: 0 }}
-              rules={[
-                { required: true, message: "Please input your password!" },
-              ]}
+              wrapperCol={{ span: 18 }}
+              rules={[{ message: "Please input your password!" }]}
             >
               <Input.Password
                 onChange={handleLogPassword}
                 // ref={passwordRef}
                 type="password"
+                placeholder="12345678"
                 value={password}
               />
             </Form.Item>

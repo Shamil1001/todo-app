@@ -48,8 +48,16 @@ export default function Register() {
   };
 
   const handleRegister = () => {
-    if (registerInformation.password !== registerInformation.confirmPassword) {
-      alert("Please, confirm that password  are the same");
+    if (
+      registerInformation.password.length == 0 ||
+      registerInformation.confirmPassword.length == 0 ||
+      regEmail.length == 0
+    ) {
+      setUserError("Please, fill the blanks");
+    } else if (
+      registerInformation.password !== registerInformation.confirmPassword
+    ) {
+      setUserError("Please, confirm that passwords are the same");
     } else {
       createUserWithEmailAndPassword(
         auth,
@@ -64,29 +72,7 @@ export default function Register() {
           setUserError("User is already registered");
         });
     }
-    // else {
-    //   auth.onAuthStateChanged((user) => {
-    //     if (user) {
-    //       // User is already authenticated, do something
-    //       console.log(`User ${user.uid} is logged in`);
-    //     } else {
-    //       // User is not authenticated, do something
-    //       console.log('User is not logged in');
-    //     }
-    //   });
-    // }
   };
-  // else {
-  //   createUserWithEmailAndPassword(
-  //     auth,
-  //     regEmail,
-  //     registerInformation.password
-  //   )
-  //     .then(() => {
-  //       navigate("/");
-  //     })
-  //     .catch((err) => console.log(err));
-  // }
 
   return (
     <>
@@ -104,9 +90,9 @@ export default function Register() {
           </div>
           <Form
             name="basic"
-            labelCol={{ span: 5 }}
+            labelCol={{ span: 0 }}
             wrapperCol={{ span: 14 }}
-            style={{ maxWidth: 600 }}
+            style={{ maxWidth: 600, width: "100%" }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
@@ -115,16 +101,15 @@ export default function Register() {
             <Form.Item
               label="Email"
               labelCol={{ span: 0 }}
-              wrapperCol={{ span: 14 }}
+              wrapperCol={{ span: 17 }}
               name="username"
-              rules={[
-                { required: true, message: "Please input your username!" },
-              ]}
+              rules={[{ message: "Please input your email!" }]}
             >
               <Input
                 style={{ marginLeft: "30px" }}
                 onChange={handleRegEmail}
                 value={regEmail}
+                placeholder="berdi@gmail.com"
               />
             </Form.Item>
 
@@ -132,9 +117,8 @@ export default function Register() {
               label="Password"
               name="password"
               labelCol={{ span: 0 }}
-              rules={[
-                { required: true, message: "Please input your password!" },
-              ]}
+              wrapperCol={{ span: 17 }}
+              rules={[{ message: "Please input your password!" }]}
             >
               <Input.Password
                 style={{ marginLeft: "7px" }}
@@ -145,6 +129,7 @@ export default function Register() {
                   })
                 }
                 // ref={passwordRef}
+                placeholder="12345678"
                 type="password"
                 value={registerInformation.password}
               />
@@ -153,9 +138,8 @@ export default function Register() {
               label="Password2"
               name="password2"
               labelCol={{ span: 0 }}
-              rules={[
-                { required: true, message: "Please input your password!" },
-              ]}
+              wrapperCol={{ span: 22 }}
+              rules={[{ message: "Please input your password!" }]}
             >
               <Input.Password
                 onChange={(e) =>
@@ -165,6 +149,7 @@ export default function Register() {
                   })
                 }
                 // ref={passwordRef}
+                placeholder="12345678"
                 type="password"
                 value={registerInformation.confirmPassword}
               />
