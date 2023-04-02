@@ -123,7 +123,7 @@ export default function Todo() {
 
           <div className="todo_list">
             <Space>
-              <Card style={{ minWidth: "20vw" }}>
+              <Card style={{ minWidth: "280px" }}>
                 {todos.map((todo: any, index) => (
                   <div className="todo_list_items" key={index}>
                     {/* <Checkbox onChange={() => onCheck(todo)}></Checkbox> */}
