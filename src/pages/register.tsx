@@ -54,6 +54,8 @@ export default function Register() {
       regEmail.length == 0
     ) {
       setUserError("Please, fill the blanks");
+    } else if (regEmail.includes("@")) {
+      setUserError("Please, write email coorectly");
     } else if (
       registerInformation.password !== registerInformation.confirmPassword
     ) {
@@ -90,8 +92,8 @@ export default function Register() {
           </div>
           <Form
             name="basic"
-            labelCol={{ span: 0 }}
-            wrapperCol={{ span: 14 }}
+            // labelCol={{ span: 0 }}
+            // wrapperCol={{ span: 14 }}
             style={{ maxWidth: 600, width: "100%" }}
             initialValues={{ remember: true }}
             onFinish={onFinish}
@@ -101,12 +103,12 @@ export default function Register() {
             <Form.Item
               label="Email"
               labelCol={{ span: 0 }}
-              wrapperCol={{ span: 17 }}
+              wrapperCol={{ span: 14 }}
               name="username"
               rules={[{ message: "Please input your email!" }]}
             >
               <Input
-                style={{ marginLeft: "30px" }}
+                style={{ marginLeft: "75px" }}
                 onChange={handleRegEmail}
                 value={regEmail}
                 placeholder="berdi@gmail.com"
@@ -117,11 +119,11 @@ export default function Register() {
               label="Password"
               name="password"
               labelCol={{ span: 0 }}
-              wrapperCol={{ span: 17 }}
+              wrapperCol={{ span: 14 }}
               rules={[{ message: "Please input your password!" }]}
             >
               <Input.Password
-                style={{ marginLeft: "7px" }}
+                style={{ marginLeft: "50px" }}
                 onChange={(e) =>
                   setRegisterInformation({
                     ...registerInformation,
@@ -129,19 +131,20 @@ export default function Register() {
                   })
                 }
                 // ref={passwordRef}
-                placeholder="12345678"
+                placeholder="password"
                 type="password"
                 value={registerInformation.password}
               />
             </Form.Item>
             <Form.Item
-              label="Password2"
+              label="Confirm password"
               name="password2"
               labelCol={{ span: 0 }}
-              wrapperCol={{ span: 22 }}
+              wrapperCol={{ span: 13 }}
               rules={[{ message: "Please input your password!" }]}
             >
               <Input.Password
+                // style={{ width: "97%" }}
                 onChange={(e) =>
                   setRegisterInformation({
                     ...registerInformation,
@@ -149,7 +152,7 @@ export default function Register() {
                   })
                 }
                 // ref={passwordRef}
-                placeholder="12345678"
+                placeholder="password"
                 type="password"
                 value={registerInformation.confirmPassword}
               />
@@ -166,7 +169,7 @@ export default function Register() {
               </div>
             )}
 
-            <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
+            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button onClick={handleRegister} type="primary" htmlType="submit">
                 Register
               </Button>

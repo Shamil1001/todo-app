@@ -106,7 +106,7 @@ export default function Login() {
                 onChange={handleLogPassword}
                 // ref={passwordRef}
                 type="password"
-                placeholder="12345678"
+                placeholder="password"
                 value={password}
               />
             </Form.Item>
