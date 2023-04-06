@@ -88,10 +88,11 @@ export default function Login() {
               rules={[{ message: "Please input your username!" }]}
             >
               <Input
-                style={{ marginLeft: "25px" }}
+                // style={{ marginLeft: "25px" }}
                 onChange={handleLogEmail}
                 placeholder="berdi@gmail.com"
                 value={email}
+                className="login_email"
               />
             </Form.Item>
 
@@ -108,6 +109,7 @@ export default function Login() {
                 type="password"
                 placeholder="password"
                 value={password}
+                className="login_password"
               />
             </Form.Item>
             {error && (

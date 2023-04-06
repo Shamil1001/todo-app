@@ -23,22 +23,6 @@ export default function Register() {
     console.log("Success:", values);
   };
 
-  // auth.onAuthStateChanged((user) => {
-  //   if (user) {
-  //     console.log("userrrrrrrrr");
-  //     // navigate("/todo");
-  //   }
-  // });
-
-  // useEffect(() => {
-  //   auth.onAuthStateChanged((user) => {
-  //     if (user) {
-  //       console.log("userrrrrrrrr");
-  //       // navigate("/todo");
-  //     }
-  //   });
-  // }, []);
-
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
   };
@@ -54,8 +38,9 @@ export default function Register() {
       regEmail.length == 0
     ) {
       setUserError("Please, fill the blanks");
-    } else if (regEmail.includes("@")) {
-      setUserError("Please, write email coorectly");
+    }
+    if (regEmail.includes("@") == false) {
+      setUserError("Please, write email correctly");
     } else if (
       registerInformation.password !== registerInformation.confirmPassword
     ) {
@@ -67,7 +52,7 @@ export default function Register() {
         registerInformation.password
       )
         .then(() => {
-          navigate("/todo");
+          navigate("/");
         })
         .catch(() => {
           console.log("User is already have");
@@ -112,6 +97,7 @@ export default function Register() {
                 onChange={handleRegEmail}
                 value={regEmail}
                 placeholder="berdi@gmail.com"
+                className="register_email"
               />
             </Form.Item>
 
@@ -132,6 +118,7 @@ export default function Register() {
                 }
                 // ref={passwordRef}
                 placeholder="password"
+                className="register_password"
                 type="password"
                 value={registerInformation.password}
               />
@@ -145,6 +132,7 @@ export default function Register() {
             >
               <Input.Password
                 // style={{ width: "97%" }}
+                className="register_confirm"
                 onChange={(e) =>
                   setRegisterInformation({
                     ...registerInformation,
