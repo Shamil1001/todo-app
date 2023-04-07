@@ -35,12 +35,21 @@
   margin-left: 50px;
 }
 .register_confirm {
-  /* margin-left: 75px; */
+  width: 100%;
+  margin-left: -3px;
+  min-width: 143px;
 }
 
 .login_email {
   margin-left: 25px;
 }
+
+/* @media (max-width: 575px) {
+  .register_confirm {
+    width: 100%;
+    margin-left: -3px;
+  } 
+} */
 
 @media (max-width: 575px) {
   .login_email {
@@ -57,5 +66,9 @@
 
   .register_password {
     margin-left: 0px;
+  }
+  .register_confirm {
+    margin-left: 0px;
+    width: 100%;
   }
 }
