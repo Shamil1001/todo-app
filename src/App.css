@@ -3,31 +3,34 @@
 @tailwind utilities;
 @import "~antd/dist/antd.css";
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App{
-    background-color: #9AA7EC;
-    height: 100vh;
+.App {
+  background-color: #9aa7ec;
+  height: 100vh;
+
+  /* min-height: 100%; */
+  /* overflow: auto; */
 }
 
-.home_page{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
+.home_page {
+  display: flex;
+  flex-direction: row;
+  /* width: 100%; */
 }
-.signup_left{
-    width: 50%;
-}
-
-.signup_left .signup_left_svg{
-    margin: 10% 15%;
-    height: 70%;
+.signup_left {
+  width: 50%;
 }
 
-.home_login{
-    width: 100%;
+.signup_left .signup_left_svg {
+  margin: 10% 15%;
+  height: 70%;
+}
+
+.home_login {
+  width: 100%;
 }

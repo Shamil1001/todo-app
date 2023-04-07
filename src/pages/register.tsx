@@ -70,7 +70,7 @@ export default function Register() {
             style={{
               display: "flex",
               justifyContent: "center",
-              marginBottom: "20px",
+              // marginBottom: "20px",
             }}
           >
             <h1 style={{ color: "black" }}>Register</h1>
@@ -93,7 +93,7 @@ export default function Register() {
               rules={[{ message: "Please input your email!" }]}
             >
               <Input
-                style={{ marginLeft: "75px" }}
+                // style={{ marginLeft: "75px" }}
                 onChange={handleRegEmail}
                 value={regEmail}
                 placeholder="berdi@gmail.com"
@@ -109,7 +109,7 @@ export default function Register() {
               rules={[{ message: "Please input your password!" }]}
             >
               <Input.Password
-                style={{ marginLeft: "50px" }}
+                // style={{ marginLeft: "50px" }}
                 onChange={(e) =>
                   setRegisterInformation({
                     ...registerInformation,
