@@ -1,11 +1,13 @@
 .register_main {
   display: flex;
   justify-content: center;
+  /* height: 100vh; */
   /* align-items: center; */
 }
 
 .register_form {
-  margin-top: 100px;
+  margin-top: 50px;
+  /* margin-bottom: 40%; */
   width: 25%;
   min-width: 300px;
   display: flex;
@@ -19,23 +21,54 @@
 }
 
 .login_form {
-  margin-top: 100px;
+  margin-top: 50px;
   width: 25%;
   min-width: 300px;
   display: flex;
   justify-content: center;
 }
 
-.login_email{
+.register_email {
+  margin-left: 75px;
+}
+.register_password {
+  margin-left: 50px;
+}
+.register_confirm {
+  width: 100%;
+  margin-left: -3px;
+  min-width: 143px;
+}
+
+.login_email {
   margin-left: 25px;
 }
+
+/* @media (max-width: 575px) {
+  .register_confirm {
+    width: 100%;
+    margin-left: -3px;
+  } 
+} */
 
 @media (max-width: 575px) {
   .login_email {
     width: 100%;
     margin-left: 0;
   }
-  .login_password{
+  .login_password {
+    width: 100%;
+  }
+
+  .register_email {
+    margin-left: 0px;
+  }
+
+  .register_password {
+    margin-left: 0px;
+  }
+  .register_confirm {
+    margin-left: 0px;
     width: 100%;
   }
 }

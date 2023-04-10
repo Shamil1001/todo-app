@@ -70,7 +70,7 @@ export default function Register() {
             style={{
               display: "flex",
               justifyContent: "center",
-              marginBottom: "20px",
+              // marginBottom: "20px",
             }}
           >
             <h1 style={{ color: "black" }}>Register</h1>
@@ -93,7 +93,7 @@ export default function Register() {
               rules={[{ message: "Please input your email!" }]}
             >
               <Input
-                style={{ marginLeft: "75px" }}
+                // style={{ marginLeft: "75px" }}
                 onChange={handleRegEmail}
                 value={regEmail}
                 placeholder="berdi@gmail.com"
@@ -109,7 +109,7 @@ export default function Register() {
               rules={[{ message: "Please input your password!" }]}
             >
               <Input.Password
-                style={{ marginLeft: "50px" }}
+                // style={{ marginLeft: "50px" }}
                 onChange={(e) =>
                   setRegisterInformation({
                     ...registerInformation,
@@ -127,7 +127,29 @@ export default function Register() {
               label="Confirm password"
               name="password2"
               labelCol={{ span: 0 }}
-              wrapperCol={{ span: 13 }}
+              wrapperCol={{ span: 14 }}
+              rules={[{ message: "Please input your password!" }]}
+            >
+              <Input.Password
+                // style={{ marginLeft: "50px" }}
+                onChange={(e) =>
+                  setRegisterInformation({
+                    ...registerInformation,
+                    confirmPassword: e.target.value,
+                  })
+                }
+                // ref={passwordRef}
+                className="register_confirm"
+                placeholder="password"
+                type="password"
+                value={registerInformation.confirmPassword}
+              />
+            </Form.Item>
+            {/* <Form.Item
+              label="Confirm password"
+              name="password2"
+              // labelCol={{ span: 0 }}
+              // wrapperCol={{ span: 22 }}
               rules={[{ message: "Please input your password!" }]}
             >
               <Input.Password
@@ -144,7 +166,7 @@ export default function Register() {
                 type="password"
                 value={registerInformation.confirmPassword}
               />
-            </Form.Item>
+            </Form.Item> */}
             {userError && (
               <div
                 style={{
