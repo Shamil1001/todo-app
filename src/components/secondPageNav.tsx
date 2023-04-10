@@ -10,11 +10,10 @@ export default function SecondPageNavbar({ handleSignOut }: NavbarProps) {
     <>
       <div className="nav_title">
         {/* <Link to="/" style={{ textDecoration: "none" }}> */}
-        <p onClick={handleSignOut} className="todo_title">
-          Todo List App
+        <p className="todo_title">Todo List App</p>
+        <p onClick={handleSignOut} className="sign_out">
+          Sign out
         </p>
-        {/* </Link> */}
-        {/* <h2 className="">Log out</h2> */}
       </div>
     </>
   );

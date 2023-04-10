@@ -23,6 +23,8 @@ export default function Todo() {
   const [todos, setTodos] = useState<Todos[]>([]);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [tempUid, setTempUid] = useState<string>("");
+  const [todoNum, setTodoNum] = useState<number>(0);
+  const [filteredTodos, setFilteredTodos] = useState([]);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -31,9 +33,13 @@ export default function Todo() {
           setTodos([]);
           const data = snapshot.val();
           if (data !== null) {
-            Object.values(data).forEach((todo) => {
-              setTodos((prev: any) => [...prev, todo]);
-            });
+            const todos = Object.values(data)
+              .map((todo: any) => ({ ...todo, timestamp: todo.timestamp || 0 }))
+              .sort((a: any, b: any) => b.timestamp - a.timestamp);
+            setTodos(todos);
+            // Object.values(data).forEach((todo) => {
+            //   setTodos((prev: any) => [...prev, todo]);
+            // });
           }
         });
       } else if (!user) {
@@ -52,11 +58,12 @@ export default function Todo() {
 
   const writeToDatabase = () => {
     const uidd = uuidv4();
-    if (auth.currentUser) {
+    if (auth.currentUser && todo.length !== 0) {
       set(ref(db, `/${auth.currentUser.uid}/${uidd}`), {
         todo: todo,
         uid: uidd,
       });
+      setTodoNum(todoNum + 1);
       setTodo("");
     }
   };
@@ -92,16 +99,11 @@ export default function Todo() {
     <>
       <div className="todo_list_page">
         <SecondPageNavbar handleSignOut={handleSignOut} />
-        {/* <div className="todo_nav" onClick={handleSignOut}>
-          <span className="logout_icon">
-            <AiOutlineLogout />
-          </span>
-          <label>Log out</label>
-        </div> */}
         <div className="todo_container">
           <div className="todo_input">
             <Input
               className="add_input_form"
+              maxLength={40}
               type="text"
               onChange={(e) => setTodo(e.target.value)}
               value={todo}
@@ -127,6 +129,8 @@ export default function Todo() {
                 {todos.map((todo: any, index) => (
                   <div className="todo_list_items" key={index}>
                     {/* <Checkbox onChange={() => onCheck(todo)}></Checkbox> */}
+                    <h3>{index + 1}</h3>
+                    {/* <h3>{todoNum}</h3> */}
                     <h3>{todo.todo}</h3>
                     <div className="delete_edit">
                       <Button
