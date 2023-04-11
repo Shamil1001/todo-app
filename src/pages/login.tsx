@@ -24,7 +24,7 @@ export default function Login() {
   const passwordRef = useRef();
 
   const onFinish = (values: any) => {
-    console.log("Success:", values);
+    // console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo: any) => {
@@ -47,7 +47,7 @@ export default function Login() {
       signInWithEmailAndPassword(auth, email, password)
         .then(() => {
           navigate("/todo");
-          console.log("successssssssss");
+          // console.log("successssssssss");
         })
         .catch((error) => {
           setError("Email or password error");

@@ -24,10 +24,15 @@ export default function Todo() {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [tempUid, setTempUid] = useState<string>("");
   const [todoNum, setTodoNum] = useState<number>(0);
+  const [deleteConfirm, setDeleteConfirm] = useState<string>();
+  const [deleteTodo, setDeleteTodo] = useState<boolean>(false);
   const [filteredTodos, setFilteredTodos] = useState([]);
+  const [userEmail, setUserEmail] = useState("");
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
+      // console.log(auth.currentUser?.email);
+      setUserEmail(auth.currentUser?.email);
       if (user) {
         onValue(ref(db, `/${auth.currentUser?.uid}`), (snapshot) => {
           setTodos([]);
@@ -69,7 +74,12 @@ export default function Todo() {
   };
 
   const handleDelete = (uid: any) => {
-    remove(ref(db, `/${auth.currentUser?.uid}/${uid}`));
+    setDeleteConfirm(uid);
+    setDeleteTodo(!deleteTodo);
+
+    if (deleteTodo == true) {
+      remove(ref(db, `/${auth.currentUser?.uid}/${uid}`));
+    }
   };
 
   const handleUpdate = (todo: any) => {
@@ -92,13 +102,13 @@ export default function Todo() {
   };
 
   const onCheck = (todo: any) => {
-    console.log(todo);
+    // console.log(todo);
   };
 
   return (
     <>
       <div className="todo_list_page">
-        <SecondPageNavbar handleSignOut={handleSignOut} />
+        <SecondPageNavbar userEmail={userEmail} handleSignOut={handleSignOut} />
         <div className="todo_container">
           <div className="todo_input">
             <Input
@@ -138,8 +148,11 @@ export default function Todo() {
                         type="primary"
                         onClick={() => handleDelete(todo.uid)}
                       >
-                        <MdOutlineDeleteOutline className="delete_icon" />
-                        {/* <span>Delete</span> */}
+                        {deleteConfirm == todo.uid ? (
+                          "confirm"
+                        ) : (
+                          <MdOutlineDeleteOutline className="delete_icon" />
+                        )}
                       </Button>
                       <Button
                         type="ghost"
