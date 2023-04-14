@@ -50,6 +50,7 @@
     flex-direction: row;
     gap: 10px;
     justify-content: space-between;
+    width: 100%;
 }
 
 .todo_input{
@@ -79,6 +80,26 @@
     flex-direction: row;
     gap: 10px;
 }
+
+.delete_btn{
+    background-color: rgb(182, 15, 15);
+    color: white;
+}
+
+.list_element{
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    /* word-wrap: break-word; */
+    word-break: break-word;
+}
+.list_element h3{
+}
+
+/* .delete_btn:hover{
+    background-color: rgb(206, 17, 17);
+    color: white;
+} */
 
 .ant-card-body{
     display: flex;

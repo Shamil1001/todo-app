@@ -135,16 +135,19 @@ export default function Todo() {
 
           <div className="todo_list">
             <Space>
-              <Card style={{ minWidth: "280px" }}>
+              <Card style={{ minWidth: "280px", maxWidth: "400px" }}>
                 {todos.map((todo: any, index) => (
                   <div className="todo_list_items" key={index}>
                     {/* <Checkbox onChange={() => onCheck(todo)}></Checkbox> */}
                     <h3>{index + 1}</h3>
                     {/* <h3>{todoNum}</h3> */}
-                    <h3>{todo.todo}</h3>
+                    <div className="list_element">
+                      <h3>{todo.todo}</h3>
+                    </div>
                     <div className="delete_edit">
                       <Button
                         danger
+                        className="delete_btn"
                         type="primary"
                         onClick={() => handleDelete(todo.uid)}
                       >
