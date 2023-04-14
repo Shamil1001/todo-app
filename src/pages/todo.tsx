@@ -9,9 +9,10 @@ import { v4 as uuidv4 } from "uuid";
 import { set, ref, onValue, remove, update } from "firebase/database";
 import { uid } from "uid";
 import "./todo.css";
-import { Input, Button, Card, Space, Checkbox } from "antd";
+import { Input, Button, Card, Space, Checkbox, Select } from "antd";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import SecondPageNavbar from "../components/secondPageNav";
+const { Option } = Select;
 
 interface Todos {
   todo: string;
@@ -28,6 +29,10 @@ export default function Todo() {
   const [deleteTodo, setDeleteTodo] = useState<boolean>(false);
   const [filteredTodos, setFilteredTodos] = useState([]);
   const [userEmail, setUserEmail] = useState("");
+
+  function handleChange(value) {
+    console.log(`selected ${value}`);
+  }
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -136,6 +141,16 @@ export default function Todo() {
           <div className="todo_list">
             <Space>
               <Card style={{ minWidth: "280px", maxWidth: "400px" }}>
+                <div className="select-sort">
+                  <Select
+                    defaultValue="date"
+                    style={{ width: 150, marginBottom: 20 }}
+                    onChange={handleChange}
+                  >
+                    <Option value="date">Sort by date</Option>
+                    <Option value="alphabet">Sort by alphabet</Option>
+                  </Select>
+                </div>
                 {todos.map((todo: any, index) => (
                   <div className="todo_list_items" key={index}>
                     {/* <Checkbox onChange={() => onCheck(todo)}></Checkbox> */}
