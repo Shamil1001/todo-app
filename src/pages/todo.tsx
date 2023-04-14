@@ -28,16 +28,16 @@ export default function Todo() {
   const [deleteConfirm, setDeleteConfirm] = useState<string>();
   const [deleteTodo, setDeleteTodo] = useState<boolean>(false);
   const [filteredTodos, setFilteredTodos] = useState([]);
-  const [userEmail, setUserEmail] = useState("");
+  const [userEmail, setUserEmail] = useState<any>("");
 
-  function handleChange(value) {
+  function handleChange(value: string) {
     console.log(`selected ${value}`);
   }
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      // console.log(auth.currentUser?.email);
-      setUserEmail(auth.currentUser?.email);
+      setUserEmail(user?.email);
+      // console.log(user?.email);
       if (user) {
         onValue(ref(db, `/${auth.currentUser?.uid}`), (snapshot) => {
           setTodos([]);
