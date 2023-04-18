@@ -2,15 +2,12 @@ import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import { AiOutlineLogout } from "react-icons/ai";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
 import { set, ref, onValue, remove, update } from "firebase/database";
-import { uid } from "uid";
 import "./todo.css";
-import { Input, Button, Card, Space, Checkbox, Select } from "antd";
-import type { CheckboxChangeEvent } from "antd/es/checkbox";
+import { Input, Button, Card, Space, Checkbox, Select, Table } from "antd";
 import SecondPageNavbar from "../components/secondPageNav";
 const { Option } = Select;
 
@@ -110,6 +107,78 @@ export default function Todo() {
     // console.log(todo);
   };
 
+  // const data = [
+  //   {
+  //     key: "1",
+  //     number: "1",
+  //     task: "Task",
+  //   },
+  //   {
+  //     key: "1",
+  //     number: "1",
+  //     task: "Task",
+  //     // edit: edit
+  //   },
+  //   {
+  //     key: "1",
+  //     number: "1",
+  //     task: "Task",
+  //     // edit: edit
+  //   },
+  //   {
+  //     key: "1",
+  //     number: "1",
+  //     task: "Task",
+  //     // edit: edit
+  //   },
+  // ];
+
+  const columns = [
+    {
+      title: "#",
+      dataIndex: "todo",
+      key: "number",
+    },
+    {
+      title: "Task Name",
+      dataIndex: "todo",
+      key: "task",
+    },
+    {
+      title: "Edit",
+      dataIndex: "edit",
+      key: "edit",
+      render: (text: any, record: any) => (
+        <Button
+          type="ghost"
+          className="edit_btn"
+          onClick={() => handleUpdate(todo)}
+        >
+          <FaEdit className="edit_icon" />
+        </Button>
+      ),
+    },
+    {
+      title: "Remove",
+      dataIndex: "remove",
+      key: "remove",
+      render: (text: any, record: any) => (
+        <Button
+          danger
+          className="delete_btn"
+          type="primary"
+          onClick={() => handleDelete(todo.uid)}
+        >
+          {deleteConfirm == todo.uid ? (
+            "confirm"
+          ) : (
+            <MdOutlineDeleteOutline className="delete_icon" />
+          )}
+        </Button>
+      ),
+    },
+  ];
+
   return (
     <>
       <div className="todo_list_page">
@@ -140,7 +209,7 @@ export default function Todo() {
 
           <div className="todo_list">
             <Space>
-              <Card style={{ minWidth: "280px", maxWidth: "400px" }}>
+              <Card style={{ minWidth: "280px", maxWidth: "500px" }}>
                 <div className="select-sort">
                   <Select
                     defaultValue="date"
@@ -153,9 +222,7 @@ export default function Todo() {
                 </div>
                 {todos.map((todo: any, index) => (
                   <div className="todo_list_items" key={index}>
-                    {/* <Checkbox onChange={() => onCheck(todo)}></Checkbox> */}
                     <h3>{index + 1}</h3>
-                    {/* <h3>{todoNum}</h3> */}
                     <div className="list_element">
                       <h3>{todo.todo}</h3>
                     </div>
@@ -178,11 +245,34 @@ export default function Todo() {
                         onClick={() => handleUpdate(todo)}
                       >
                         <FaEdit className="edit_icon" />
-                        {/* Edit */}
                       </Button>
                     </div>
                   </div>
                 ))}
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Header 1</th>
+                      <th>Header 2</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Data 1</td>
+                      <td>Data 2</td>
+                    </tr>
+                    <tr>
+                      <td>Data 3</td>
+                      <td>Data 4</td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                {/* <Table
+                  columns={columns}
+                  dataSource={todos}
+                  // onChange={handleChange}
+                /> */}
               </Card>
             </Space>
           </div>
