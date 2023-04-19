@@ -162,20 +162,20 @@ export default function Todo() {
       title: "Remove",
       dataIndex: "remove",
       key: "remove",
-      render: (text: any, record: any) => (
-        <Button
-          danger
-          className="delete_btn"
-          type="primary"
-          onClick={() => handleDelete(todo.uid)}
-        >
-          {deleteConfirm == todo.uid ? (
-            "confirm"
-          ) : (
-            <MdOutlineDeleteOutline className="delete_icon" />
-          )}
-        </Button>
-      ),
+      // render: (text: any, record: any) => (
+      //   // <Button
+      //   //   danger
+      //   //   className="delete_btn"
+      //   //   type="primary"
+      //   //   onClick={() => handleDelete(todo.uid)}
+      //   // >
+      //   //   {deleteConfirm == todo.uid ? (
+      //   //     "confirm"
+      //   //   ) : (
+      //   //     <MdOutlineDeleteOutline className="delete_icon" />
+      //   //   )}
+      //   // </Button>
+      // ),
     },
   ];
 
@@ -220,7 +220,7 @@ export default function Todo() {
                     <Option value="alphabet">Sort by alphabet</Option>
                   </Select>
                 </div>
-                {todos.map((todo: any, index) => (
+                {/* {todos.map((todo: any, index) => (
                   <div className="todo_list_items" key={index}>
                     <h3>{index + 1}</h3>
                     <div className="list_element">
@@ -248,23 +248,52 @@ export default function Todo() {
                       </Button>
                     </div>
                   </div>
-                ))}
+                ))} */}
                 <table>
                   <thead>
                     <tr>
-                      <th>Header 1</th>
-                      <th>Header 2</th>
+                      <th>#</th>
+                      <th>Task Name</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
+                    {todos.map((todo: any, index: number) => (
+                      <tr>
+                        <td>{index}</td>
+                        <td>{todo.todo}</td>
+                        <td>
+                          <Button
+                            danger
+                            className="delete_btn"
+                            type="primary"
+                            onClick={() => handleDelete(todo.uid)}
+                          >
+                            {deleteConfirm == todo.uid ? (
+                              "confirm"
+                            ) : (
+                              <MdOutlineDeleteOutline className="delete_icon" />
+                            )}
+                          </Button>
+                        </td>
+                        <td>
+                          <Button
+                            type="ghost"
+                            className="edit_btn"
+                            onClick={() => handleUpdate(todo)}
+                          >
+                            <FaEdit className="edit_icon" />
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                    {/* <tr>
                       <td>Data 1</td>
                       <td>Data 2</td>
-                    </tr>
-                    <tr>
                       <td>Data 3</td>
                       <td>Data 4</td>
-                    </tr>
+                    </tr> */}
                   </tbody>
                 </table>
 
