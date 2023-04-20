@@ -24,11 +24,27 @@ export default function Todo() {
   const [todoNum, setTodoNum] = useState<number>(0);
   const [deleteConfirm, setDeleteConfirm] = useState<string>();
   const [deleteTodo, setDeleteTodo] = useState<boolean>(false);
-  const [filteredTodos, setFilteredTodos] = useState([]);
+  const [sortedTodos, setSortedTodos] = useState<Todos[]>(todos);
   const [userEmail, setUserEmail] = useState<any>("");
 
   function handleChange(value: string) {
     console.log(`selected ${value}`);
+    if (value == "alphabet") {
+      const sorted = todos.sort((a, b) => {
+        let titleA = a.todo.toUpperCase(); // ignore upper and lowercase
+        let titleB = b.todo.toUpperCase(); // ignore upper and lowercase
+        if (titleA < titleB) {
+          return -1; // titleA comes first
+        }
+        if (titleA > titleB) {
+          return 1; // titleB comes first
+        }
+        return 0; // titles are equal
+      });
+      setSortedTodos(sorted);
+      console.log(sorted);
+    } else {
+    }
   }
 
   useEffect(() => {
@@ -40,13 +56,14 @@ export default function Todo() {
           setTodos([]);
           const data = snapshot.val();
           if (data !== null) {
-            const todos = Object.values(data)
-              .map((todo: any) => ({ ...todo, timestamp: todo.timestamp || 0 }))
-              .sort((a: any, b: any) => b.timestamp - a.timestamp);
-            setTodos(todos);
-            // Object.values(data).forEach((todo) => {
-            //   setTodos((prev: any) => [...prev, todo]);
-            // });
+            // const todos = Object.values(data)
+            //   .map((todo: any) => ({ ...todo, timestamp: todo.timestamp || 0 }))
+            //   .sort((a: any, b: any) => b.timestamp - a.timestamp);
+            // setTodos(todos);
+            Object.values(data).forEach((todo) => {
+              setTodos((prev: any) => [...prev, todo]);
+              setSortedTodos(todos);
+            });
           }
         });
       } else if (!user) {
@@ -65,13 +82,19 @@ export default function Todo() {
 
   const writeToDatabase = () => {
     const uidd = uuidv4();
-    if (auth.currentUser && todo.length !== 0) {
-      set(ref(db, `/${auth.currentUser.uid}/${uidd}`), {
-        todo: todo,
-        uid: uidd,
-      });
-      setTodoNum(todoNum + 1);
+    if (todo.trim() !== "") {
+      if (auth.currentUser && todo.length !== 0) {
+        set(ref(db, `/${auth.currentUser.uid}/${uidd}`), {
+          todo: todo,
+          uid: uidd,
+        });
+        setTodoNum(todoNum + 1);
+        setTodo("");
+      }
+    } else {
+      alert("Please enter a valid input!");
       setTodo("");
+      return;
     }
   };
 
@@ -107,78 +130,6 @@ export default function Todo() {
     // console.log(todo);
   };
 
-  // const data = [
-  //   {
-  //     key: "1",
-  //     number: "1",
-  //     task: "Task",
-  //   },
-  //   {
-  //     key: "1",
-  //     number: "1",
-  //     task: "Task",
-  //     // edit: edit
-  //   },
-  //   {
-  //     key: "1",
-  //     number: "1",
-  //     task: "Task",
-  //     // edit: edit
-  //   },
-  //   {
-  //     key: "1",
-  //     number: "1",
-  //     task: "Task",
-  //     // edit: edit
-  //   },
-  // ];
-
-  const columns = [
-    {
-      title: "#",
-      dataIndex: "todo",
-      key: "number",
-    },
-    {
-      title: "Task Name",
-      dataIndex: "todo",
-      key: "task",
-    },
-    {
-      title: "Edit",
-      dataIndex: "edit",
-      key: "edit",
-      render: (text: any, record: any) => (
-        <Button
-          type="ghost"
-          className="edit_btn"
-          onClick={() => handleUpdate(todo)}
-        >
-          <FaEdit className="edit_icon" />
-        </Button>
-      ),
-    },
-    {
-      title: "Remove",
-      dataIndex: "remove",
-      key: "remove",
-      // render: (text: any, record: any) => (
-      //   // <Button
-      //   //   danger
-      //   //   className="delete_btn"
-      //   //   type="primary"
-      //   //   onClick={() => handleDelete(todo.uid)}
-      //   // >
-      //   //   {deleteConfirm == todo.uid ? (
-      //   //     "confirm"
-      //   //   ) : (
-      //   //     <MdOutlineDeleteOutline className="delete_icon" />
-      //   //   )}
-      //   // </Button>
-      // ),
-    },
-  ];
-
   return (
     <>
       <div className="todo_list_page">
@@ -188,6 +139,7 @@ export default function Todo() {
             <Input
               className="add_input_form"
               maxLength={40}
+              minLength={5}
               type="text"
               onChange={(e) => setTodo(e.target.value)}
               value={todo}
@@ -259,8 +211,8 @@ export default function Todo() {
                     </tr>
                   </thead>
                   <tbody>
-                    {todos.map((todo: any, index: number) => (
-                      <tr>
+                    {sortedTodos.map((todo: any, index: number) => (
+                      <tr key={index}>
                         <td>{index}</td>
                         <td>{todo.todo}</td>
                         <td>
@@ -288,20 +240,8 @@ export default function Todo() {
                         </td>
                       </tr>
                     ))}
-                    {/* <tr>
-                      <td>Data 1</td>
-                      <td>Data 2</td>
-                      <td>Data 3</td>
-                      <td>Data 4</td>
-                    </tr> */}
                   </tbody>
                 </table>
-
-                {/* <Table
-                  columns={columns}
-                  dataSource={todos}
-                  // onChange={handleChange}
-                /> */}
               </Card>
             </Space>
           </div>
