@@ -7,7 +7,7 @@ import { FaEdit } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
 import { set, ref, onValue, remove, update } from "firebase/database";
 import "./todo.css";
-import { Input, Button, Card, Space, Checkbox, Select, Table } from "antd";
+import { Input, Button, Card, Space, Select } from "antd";
 import SecondPageNavbar from "../components/secondPageNav";
 const { Option } = Select;
 
@@ -24,47 +24,53 @@ export default function Todo() {
   const [todoNum, setTodoNum] = useState<number>(0);
   const [deleteConfirm, setDeleteConfirm] = useState<string>();
   const [deleteTodo, setDeleteTodo] = useState<boolean>(false);
-  const [sortedTodos, setSortedTodos] = useState<Todos[]>(todos);
   const [userEmail, setUserEmail] = useState<any>("");
 
   function handleChange(value: string) {
     console.log(`selected ${value}`);
     if (value == "alphabet") {
       const sorted = todos.sort((a, b) => {
-        let titleA = a.todo.toUpperCase(); // ignore upper and lowercase
-        let titleB = b.todo.toUpperCase(); // ignore upper and lowercase
+        let titleA = a.todo.toUpperCase();
+        let titleB = b.todo.toUpperCase();
         if (titleA < titleB) {
-          return -1; // titleA comes first
+          return -1;
         }
         if (titleA > titleB) {
-          return 1; // titleB comes first
+          return 1;
         }
-        return 0; // titles are equal
+        return 0;
       });
-      setSortedTodos(sorted);
-      console.log(sorted);
-    } else {
+      setTodos(sorted);
+      // console.log(sorted);
+    } else if (value == "date") {
+      // const sortedData = todos.sort((a: any, b: any) => b.date - a.date);
+      // const sortedData = todos.sort((taskA: any, taskB: any) =>
+      //   taskA.date.localeCompare(taskB.date)
+      // );
+      // setTodos(sortedData);
+      // console.log(sortedData);
     }
   }
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setUserEmail(user?.email);
-      // console.log(user?.email);
+
       if (user) {
         onValue(ref(db, `/${auth.currentUser?.uid}`), (snapshot) => {
           setTodos([]);
           const data = snapshot.val();
+
           if (data !== null) {
-            // const todos = Object.values(data)
-            //   .map((todo: any) => ({ ...todo, timestamp: todo.timestamp || 0 }))
-            //   .sort((a: any, b: any) => b.timestamp - a.timestamp);
+            // const todos = Object.values(data).map((todo: any) => ({
+            //   ...todo,
+            // }));
             // setTodos(todos);
             Object.values(data).forEach((todo) => {
               setTodos((prev: any) => [...prev, todo]);
-              setSortedTodos(todos);
             });
           }
+          // console.log("data", Object.v alues(data));
         });
       } else if (!user) {
         navigate("/");
@@ -82,12 +88,15 @@ export default function Todo() {
 
   const writeToDatabase = () => {
     const uidd = uuidv4();
+    const date = new Date().toString();
     if (todo.trim() !== "") {
       if (auth.currentUser && todo.length !== 0) {
         set(ref(db, `/${auth.currentUser.uid}/${uidd}`), {
           todo: todo,
           uid: uidd,
+          date: date,
         });
+        console.log(todos);
         setTodoNum(todoNum + 1);
         setTodo("");
       }
@@ -100,9 +109,9 @@ export default function Todo() {
 
   const handleDelete = (uid: any) => {
     setDeleteConfirm(uid);
+    console.log(todos);
     setDeleteTodo(!deleteTodo);
-
-    if (deleteTodo == true) {
+    if (deleteConfirm == uid) {
       remove(ref(db, `/${auth.currentUser?.uid}/${uid}`));
     }
   };
@@ -126,10 +135,6 @@ export default function Todo() {
     }
   };
 
-  const onCheck = (todo: any) => {
-    // console.log(todo);
-  };
-
   return (
     <>
       <div className="todo_list_page">
@@ -138,7 +143,7 @@ export default function Todo() {
           <div className="todo_input">
             <Input
               className="add_input_form"
-              maxLength={40}
+              maxLength={20}
               minLength={5}
               type="text"
               onChange={(e) => setTodo(e.target.value)}
@@ -164,43 +169,16 @@ export default function Todo() {
               <Card style={{ minWidth: "280px", maxWidth: "500px" }}>
                 <div className="select-sort">
                   <Select
-                    defaultValue="date"
+                    defaultValue="sort"
                     style={{ width: 150, marginBottom: 20 }}
                     onChange={handleChange}
                   >
+                    <Option value="sort">Sort option</Option>
                     <Option value="date">Sort by date</Option>
                     <Option value="alphabet">Sort by alphabet</Option>
                   </Select>
                 </div>
-                {/* {todos.map((todo: any, index) => (
-                  <div className="todo_list_items" key={index}>
-                    <h3>{index + 1}</h3>
-                    <div className="list_element">
-                      <h3>{todo.todo}</h3>
-                    </div>
-                    <div className="delete_edit">
-                      <Button
-                        danger
-                        className="delete_btn"
-                        type="primary"
-                        onClick={() => handleDelete(todo.uid)}
-                      >
-                        {deleteConfirm == todo.uid ? (
-                          "confirm"
-                        ) : (
-                          <MdOutlineDeleteOutline className="delete_icon" />
-                        )}
-                      </Button>
-                      <Button
-                        type="ghost"
-                        className="edit_btn"
-                        onClick={() => handleUpdate(todo)}
-                      >
-                        <FaEdit className="edit_icon" />
-                      </Button>
-                    </div>
-                  </div>
-                ))} */}
+
                 <table>
                   <thead>
                     <tr>
@@ -211,9 +189,9 @@ export default function Todo() {
                     </tr>
                   </thead>
                   <tbody>
-                    {sortedTodos.map((todo: any, index: number) => (
+                    {todos.map((todo: any, index: number) => (
                       <tr key={index}>
-                        <td>{index}</td>
+                        <td>{index + 1}</td>
                         <td>{todo.todo}</td>
                         <td>
                           <Button
