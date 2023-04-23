@@ -25,9 +25,12 @@ export default function Todo() {
   const [deleteConfirm, setDeleteConfirm] = useState<string>();
   const [deleteTodo, setDeleteTodo] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<any>("");
+  const [selectedOption, setSelectedOption] = useState("");
+  const [sortedData, setSortedData] = useState<Todos[]>([]);
 
   function handleChange(value: string) {
     console.log(`selected ${value}`);
+    setSelectedOption(value);
     if (value == "alphabet") {
       const sorted = todos.sort((a, b) => {
         let titleA = a.todo.toUpperCase();
@@ -43,11 +46,10 @@ export default function Todo() {
       setTodos(sorted);
       // console.log(sorted);
     } else if (value == "date") {
-      // const sortedData = todos.sort((a: any, b: any) => b.date - a.date);
-      // const sortedData = todos.sort((taskA: any, taskB: any) =>
-      //   taskA.date.localeCompare(taskB.date)
-      // );
-      // setTodos(sortedData);
+      const sortedData = todos.sort((taskA: any, taskB: any) =>
+        taskA.date.localeCompare(taskB.date)
+      );
+      setTodos(sortedData);
       // console.log(sortedData);
     }
   }
@@ -68,9 +70,10 @@ export default function Todo() {
             // setTodos(todos);
             Object.values(data).forEach((todo) => {
               setTodos((prev: any) => [...prev, todo]);
+              // setSortedData(todos);
             });
+            // console.log("data", todos);
           }
-          // console.log("data", Object.v alues(data));
         });
       } else if (!user) {
         navigate("/");
@@ -89,6 +92,7 @@ export default function Todo() {
   const writeToDatabase = () => {
     const uidd = uuidv4();
     const date = new Date().toString();
+    // console.log(sortedData);
     if (todo.trim() !== "") {
       if (auth.currentUser && todo.length !== 0) {
         set(ref(db, `/${auth.currentUser.uid}/${uidd}`), {
@@ -96,7 +100,7 @@ export default function Todo() {
           uid: uidd,
           date: date,
         });
-        console.log(todos);
+
         setTodoNum(todoNum + 1);
         setTodo("");
       }
@@ -109,7 +113,6 @@ export default function Todo() {
 
   const handleDelete = (uid: any) => {
     setDeleteConfirm(uid);
-    console.log(todos);
     setDeleteTodo(!deleteTodo);
     if (deleteConfirm == uid) {
       remove(ref(db, `/${auth.currentUser?.uid}/${uid}`));
@@ -169,11 +172,12 @@ export default function Todo() {
               <Card style={{ minWidth: "280px", maxWidth: "500px" }}>
                 <div className="select-sort">
                   <Select
-                    defaultValue="sort"
+                    // defaultValue="date"
+                    value={selectedOption}
                     style={{ width: 150, marginBottom: 20 }}
                     onChange={handleChange}
                   >
-                    <Option value="sort">Sort option</Option>
+                    <Option value="">Select option</Option>
                     <Option value="date">Sort by date</Option>
                     <Option value="alphabet">Sort by alphabet</Option>
                   </Select>
