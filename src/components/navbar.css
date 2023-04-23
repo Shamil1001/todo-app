@@ -27,3 +27,9 @@
   font-size: 22px;
   cursor: pointer;
 }
+
+.userEmail{
+  color: white;
+  font-size: 25px;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
