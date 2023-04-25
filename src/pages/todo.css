@@ -63,6 +63,7 @@
     background: green;
     border-color: green;
     color: white;
+    width: 60px;
 }
 
 .edit_btn:hover{
@@ -82,8 +83,31 @@
 }
 
 .delete_btn{
-    background-color: rgb(182, 15, 15);
+    background: rgb(243, 21, 21);
+}
+.delete_btn:hover{
+    background-color: rgb(248, 81, 81);
+}
+
+.btn {
+    width: 60px;
+    height: 30px;
+    border-radius: 5px;
+    border-style: none;
+    cursor: pointer;
+
+}
+.delete_icon{
     color: white;
+}
+
+.delete_b{
+    background: rgb(196, 10, 10);
+    color: white;
+    font-size: 15px;
+}
+.delete_b:hover{
+    background-color: rgb(248, 81, 81);
 }
 
 .list_element{
@@ -119,8 +143,13 @@ table {
     width: 100%;
   }
   
-  td, th {
+  td {
     border: 1px solid #dddddd;
     text-align: left;
+    padding: 8px;
+  }
+   th {
+    border: 1px solid #dddddd;
+    text-align: center;
     padding: 8px;
   }

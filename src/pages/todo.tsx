@@ -7,13 +7,42 @@ import { FaEdit } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
 import { set, ref, onValue, remove, update } from "firebase/database";
 import "./todo.css";
-import { Input, Button, Card, Space, Select } from "antd";
+import {
+  Input,
+  Button,
+  Card,
+  Space,
+  Select,
+  Dropdown,
+  Typography,
+  message,
+} from "antd";
 import SecondPageNavbar from "../components/secondPageNav";
 const { Option } = Select;
+import { DownOutlined } from "@ant-design/icons";
+import type { MenuProps } from "antd";
 
 interface Todos {
   todo: string;
 }
+const onClick: MenuProps["onClick"] = ({ key }) => {
+  message.info(`Click on item ${key}`);
+};
+
+const items: MenuProps["items"] = [
+  {
+    key: "1",
+    label: "Doing",
+  },
+  {
+    key: "2",
+    label: "Done",
+  },
+  {
+    key: "3",
+    label: "Not started",
+  },
+];
 
 export default function Todo() {
   const navigate = useNavigate();
@@ -169,7 +198,7 @@ export default function Todo() {
 
           <div className="todo_list">
             <Space>
-              <Card style={{ minWidth: "280px", maxWidth: "500px" }}>
+              <Card style={{ minWidth: "350px", maxWidth: "550px" }}>
                 <div className="select-sort">
                   <Select
                     // defaultValue="date"
@@ -188,6 +217,7 @@ export default function Todo() {
                     <tr>
                       <th>#</th>
                       <th>Task Name</th>
+                      <th>Status</th>
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
@@ -198,18 +228,30 @@ export default function Todo() {
                         <td>{index + 1}</td>
                         <td>{todo.todo}</td>
                         <td>
-                          <Button
-                            danger
-                            className="delete_btn"
-                            type="primary"
+                          <Dropdown menu={{ items, onClick }}>
+                            <a onClick={(e) => e.preventDefault()}>
+                              <Space>
+                                Hover me
+                                <DownOutlined />
+                              </Space>
+                            </a>
+                          </Dropdown>
+                        </td>
+                        <td>
+                          <button
+                            className={
+                              deleteConfirm == todo.uid
+                                ? "delete_b btn"
+                                : "delete_btn btn"
+                            }
                             onClick={() => handleDelete(todo.uid)}
                           >
                             {deleteConfirm == todo.uid ? (
-                              "confirm"
+                              <p>delete</p>
                             ) : (
                               <MdOutlineDeleteOutline className="delete_icon" />
                             )}
-                          </Button>
+                          </button>
                         </td>
                         <td>
                           <Button
