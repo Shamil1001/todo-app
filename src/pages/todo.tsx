@@ -2,47 +2,17 @@ import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import { MdOutlineDeleteOutline } from "react-icons/md";
-import { FaEdit } from "react-icons/fa";
 import { v4 as uuidv4 } from "uuid";
 import { set, ref, onValue, remove, update } from "firebase/database";
 import "./todo.css";
-import {
-  Input,
-  Button,
-  Card,
-  Space,
-  Select,
-  Dropdown,
-  Typography,
-  message,
-} from "antd";
+import { Input, Button, Card, Space, Select } from "antd";
 import SecondPageNavbar from "../components/secondPageNav";
 const { Option } = Select;
-import { DownOutlined } from "@ant-design/icons";
-import type { MenuProps } from "antd";
+import TodoTable from "../components/todoTable";
 
 interface Todos {
   todo: string;
 }
-const onClick: MenuProps["onClick"] = ({ key }) => {
-  message.info(`Click on item ${key}`);
-};
-
-const items: MenuProps["items"] = [
-  {
-    key: "1",
-    label: "Doing",
-  },
-  {
-    key: "2",
-    label: "Done",
-  },
-  {
-    key: "3",
-    label: "Not started",
-  },
-];
 
 export default function Todo() {
   const navigate = useNavigate();
@@ -55,7 +25,6 @@ export default function Todo() {
   const [deleteTodo, setDeleteTodo] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<any>("");
   const [selectedOption, setSelectedOption] = useState("");
-  const [sortedData, setSortedData] = useState<Todos[]>([]);
 
   function handleChange(value: string) {
     console.log(`selected ${value}`);
@@ -79,7 +48,6 @@ export default function Todo() {
         taskA.date.localeCompare(taskB.date)
       );
       setTodos(sortedData);
-      // console.log(sortedData);
     }
   }
 
@@ -93,15 +61,9 @@ export default function Todo() {
           const data = snapshot.val();
 
           if (data !== null) {
-            // const todos = Object.values(data).map((todo: any) => ({
-            //   ...todo,
-            // }));
-            // setTodos(todos);
             Object.values(data).forEach((todo) => {
               setTodos((prev: any) => [...prev, todo]);
-              // setSortedData(todos);
             });
-            // console.log("data", todos);
           }
         });
       } else if (!user) {
@@ -121,16 +83,18 @@ export default function Todo() {
   const writeToDatabase = () => {
     const uidd = uuidv4();
     const date = new Date().toString();
-    // console.log(sortedData);
+    const todoStatus = "doing";
     if (todo.trim() !== "") {
       if (auth.currentUser && todo.length !== 0) {
         set(ref(db, `/${auth.currentUser.uid}/${uidd}`), {
           todo: todo,
           uid: uidd,
           date: date,
+          todoStatus: todoStatus,
         });
 
         setTodoNum(todoNum + 1);
+        console.log(todos);
         setTodo("");
       }
     } else {
@@ -211,61 +175,12 @@ export default function Todo() {
                     <Option value="alphabet">Sort by alphabet</Option>
                   </Select>
                 </div>
-
-                <table>
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Task Name</th>
-                      <th>Status</th>
-                      <th>Edit</th>
-                      <th>Delete</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {todos.map((todo: any, index: number) => (
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>{todo.todo}</td>
-                        <td>
-                          <Dropdown menu={{ items, onClick }}>
-                            <a onClick={(e) => e.preventDefault()}>
-                              <Space>
-                                Hover me
-                                <DownOutlined />
-                              </Space>
-                            </a>
-                          </Dropdown>
-                        </td>
-                        <td>
-                          <button
-                            className={
-                              deleteConfirm == todo.uid
-                                ? "delete_b btn"
-                                : "delete_btn btn"
-                            }
-                            onClick={() => handleDelete(todo.uid)}
-                          >
-                            {deleteConfirm == todo.uid ? (
-                              <p>delete</p>
-                            ) : (
-                              <MdOutlineDeleteOutline className="delete_icon" />
-                            )}
-                          </button>
-                        </td>
-                        <td>
-                          <Button
-                            type="ghost"
-                            className="edit_btn"
-                            onClick={() => handleUpdate(todo)}
-                          >
-                            <FaEdit className="edit_icon" />
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                <TodoTable
+                  todos={todos}
+                  deleteConfirm={deleteConfirm}
+                  handleUpdate={handleUpdate}
+                  handleDelete={handleDelete}
+                />
               </Card>
             </Space>
           </div>
