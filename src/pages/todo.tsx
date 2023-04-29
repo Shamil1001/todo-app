@@ -162,7 +162,8 @@ export default function Todo() {
 
           <div className="todo_list">
             <Space>
-              <Card style={{ minWidth: "350px", maxWidth: "550px" }}>
+              {/* <Card style={{ minWidth: "350px", maxWidth: "550px" }}> */}
+              <Card style={{ minWidth: "350px", width: "60vw" }}>
                 <div className="select-sort">
                   <Select
                     // defaultValue="date"
