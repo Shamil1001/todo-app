@@ -1,6 +1,4 @@
-.todo_list_page{
-    /* padding: 20px 40px; */
-}
+
 
 .todo_nav{
     height: 50px;
@@ -125,8 +123,7 @@
     /* word-wrap: break-word; */
     word-break: break-word;
 }
-.list_element h3{
-}
+
 
 /* .delete_btn:hover{
     background-color: rgb(206, 17, 17);
