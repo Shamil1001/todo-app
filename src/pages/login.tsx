@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState, useRef, useEffect } from "react";
 import { Card, Space } from "antd";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, message } from "antd";
 import Navbar from "../components/navbar";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
@@ -11,14 +11,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   auth.onAuthStateChanged((user) => {
-  //     if (user) {
-  //       navigate("/todo");
-  //     }
-  //   });
-  // }, []);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -46,8 +39,9 @@ export default function Login() {
     } else {
       signInWithEmailAndPassword(auth, email, password)
         .then(() => {
-          navigate("/todo");
-          // console.log("successssssssss");
+          message.success("You have been successfully logged in.", 2, () => {
+            navigate("/todo");
+          });
         })
         .catch((error) => {
           setError("Email or password error");

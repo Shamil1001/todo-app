@@ -3,14 +3,17 @@ import "../components/signup";
 import Navbar from "../components/navbar";
 import "./register.css";
 import { Card } from "antd";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, notification, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
+import { SmileOutlined } from "@ant-design/icons";
 
 export default function Register() {
   const [regEmail, setRegEmail] = useState("");
   const [regPassword, setRegPassword] = useState("");
+  const [messageApi, contextHolder] = message.useMessage();
+  // const [api, contextHolder] = notification.useNotification();
   const [userError, setUserError] = useState("");
   const [registerInformation, setRegisterInformation] = useState({
     password: "",
@@ -18,6 +21,13 @@ export default function Register() {
   });
 
   const navigate = useNavigate();
+
+  const success = () => {
+    messageApi.open({
+      type: "success",
+      content: "This is a success message",
+    });
+  };
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
@@ -52,7 +62,9 @@ export default function Register() {
         registerInformation.password
       )
         .then(() => {
-          navigate("/");
+          message.success("You have been successfully registered.", 2, () => {
+            navigate("/");
+          });
         })
         .catch(() => {
           console.log("User is already have");
@@ -64,6 +76,7 @@ export default function Register() {
   return (
     <>
       <Navbar />
+      {contextHolder}
       <div className="register_main">
         <Card className="register_form">
           <div
@@ -145,28 +158,7 @@ export default function Register() {
                 value={registerInformation.confirmPassword}
               />
             </Form.Item>
-            {/* <Form.Item
-              label="Confirm password"
-              name="password2"
-              // labelCol={{ span: 0 }}
-              // wrapperCol={{ span: 22 }}
-              rules={[{ message: "Please input your password!" }]}
-            >
-              <Input.Password
-                // style={{ width: "97%" }}
-                className="register_confirm"
-                onChange={(e) =>
-                  setRegisterInformation({
-                    ...registerInformation,
-                    confirmPassword: e.target.value,
-                  })
-                }
-                // ref={passwordRef}
-                placeholder="password"
-                type="password"
-                value={registerInformation.confirmPassword}
-              />
-            </Form.Item> */}
+
             {userError && (
               <div
                 style={{
