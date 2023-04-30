@@ -59,12 +59,20 @@
     gap: 20px;
 }
 
+/* .btns_e{
+    display: flex;
+    justify-content: center;
+    
+} */
+
 .edit_btn{
     background: green;
     border-color: green;
     color: white;
     width: 60px;
+    
 }
+
 
 .edit_btn:hover{
     background-color: rgb(20, 151, 20);
@@ -124,6 +132,8 @@
     background-color: rgb(206, 17, 17);
     color: white;
 } */
+
+
 
 .ant-card-body{
     display: flex;

@@ -135,11 +135,11 @@ export default function TodoTable({
         { text: "Joe", value: "Joe" },
         { text: "Jim", value: "Jim" },
       ],
-      filteredValue: filteredInfo.name || null,
-      onFilter: (value: string, record) => record.name.includes(value),
-      sorter: (a, b) => a.name.length - b.name.length,
-      sortOrder: sortedInfo.columnKey === "name" ? sortedInfo.order : null,
-      ellipsis: true,
+      // filteredValue: filteredInfo.name || null,
+      // onFilter: (value: string, record) => record.name.includes(value),
+      // sorter: (a, b) => a.name.length - b.name.length,
+      // sortOrder: sortedInfo.columnKey === "name" ? sortedInfo.order : null,
+      // ellipsis: true,
     },
     {
       title: "Age",
@@ -157,19 +157,19 @@ export default function TodoTable({
         { text: "London", value: "London" },
         { text: "New York", value: "New York" },
       ],
-      filteredValue: filteredInfo.address || null,
-      onFilter: (value: string, record) => record.address.includes(value),
-      sorter: (a, b) => a.address.length - b.address.length,
-      sortOrder: sortedInfo.columnKey === "address" ? sortedInfo.order : null,
-      ellipsis: true,
+      // filteredValue: filteredInfo.address || null,
+      // onFilter: (value: string, record) => record.address.includes(value),
+      // sorter: (a, b) => a.address.length - b.address.length,
+      // sortOrder: sortedInfo.columnKey === "address" ? sortedInfo.order : null,
+      // ellipsis: true,
     },
   ];
 
   console.log(todos);
   return (
     <>
-      <Table columns={columns} dataSource={data} onChange={onChange} />;
-      {/* <table>
+      {/* <Table columns={columns} dataSource={data} onChange={onChange} />; */}
+      <table>
         <thead>
           <tr>
             <th>#</th>
@@ -179,15 +179,15 @@ export default function TodoTable({
             <th>Delete</th>
           </tr>
         </thead>
-        <tbody> */}
-      {/* <tr>
+        <tbody>
+          {/* <tr>
             <td>shamil</td>
             <td>shamil</td>
             <td>shamil</td>
             <td>shamil</td>
             <td>shamil</td>
           </tr> */}
-      {/* {todos.map((todo: any, index: number) => (
+          {todos.map((todo: any, index: number) => (
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{todo.todo}</td>
@@ -211,7 +211,7 @@ export default function TodoTable({
                   </a>
                 </Dropdown>
               </td>
-              <td>
+              <td className="btns">
                 <button
                   className={
                     deleteConfirm == todo.uid
@@ -227,7 +227,7 @@ export default function TodoTable({
                   )}
                 </button>
               </td>
-              <td>
+              <td className="btns_e">
                 <Button
                   type="ghost"
                   className="edit_btn"
@@ -237,9 +237,9 @@ export default function TodoTable({
                 </Button>
               </td>
             </tr>
-          ))} */}
-      {/* </tbody>
-      </table> */}
+          ))}
+        </tbody>
+      </table>
     </>
   );
 }
