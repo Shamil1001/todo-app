@@ -28,50 +28,13 @@ interface DataType {
   address: string;
 }
 
-const data: DataType[] = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    name: "Jim Green",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "3",
-    name: "Joe Black",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "4",
-    name: "Jim Red",
-    age: 32,
-    address: "London No. 2 Lake Park",
-  },
-];
-
-const onChange: TableProps<DataType>["onChange"] = (
-  pagination,
-  filters,
-  sorter,
-  extra
-) => {
-  console.log("params", pagination, filters, sorter, extra);
-};
-
 const handleOptionClick = (element: string, option: any) => {
-  console.log(auth.currentUser);
+  console.log(option.key);
   if (auth.currentUser) {
-    set(ref(db, `/${auth.currentUser.uid}/${element}`), {
+    update(ref(db, `/${auth.currentUser.uid}/${element}`), {
       todoStatus: option.key,
     });
   }
-  //   console.log(todos)
 };
 
 const items: MenuProps["items"] = [
@@ -126,45 +89,6 @@ export default function TodoTable({
     });
   };
 
-  const columns: ColumnsType<DataType> = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      filters: [
-        { text: "Joe", value: "Joe" },
-        { text: "Jim", value: "Jim" },
-      ],
-      // filteredValue: filteredInfo.name || null,
-      // onFilter: (value: string, record) => record.name.includes(value),
-      // sorter: (a, b) => a.name.length - b.name.length,
-      // sortOrder: sortedInfo.columnKey === "name" ? sortedInfo.order : null,
-      // ellipsis: true,
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-      sorter: (a, b) => a.age - b.age,
-      sortOrder: sortedInfo.columnKey === "age" ? sortedInfo.order : null,
-      ellipsis: true,
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-      filters: [
-        { text: "London", value: "London" },
-        { text: "New York", value: "New York" },
-      ],
-      // filteredValue: filteredInfo.address || null,
-      // onFilter: (value: string, record) => record.address.includes(value),
-      // sorter: (a, b) => a.address.length - b.address.length,
-      // sortOrder: sortedInfo.columnKey === "address" ? sortedInfo.order : null,
-      // ellipsis: true,
-    },
-  ];
-
   console.log(todos);
   return (
     <>
@@ -180,13 +104,6 @@ export default function TodoTable({
           </tr>
         </thead>
         <tbody>
-          {/* <tr>
-            <td>shamil</td>
-            <td>shamil</td>
-            <td>shamil</td>
-            <td>shamil</td>
-            <td>shamil</td>
-          </tr> */}
           {todos.map((todo: any, index: number) => (
             <tr key={index}>
               <td>{index + 1}</td>
