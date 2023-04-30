@@ -73,6 +73,16 @@ export default function TodoTable({
     setSortedInfo(sorter as SorterResult<DataType>);
   };
 
+  const formatDate = (date: string) => {
+    const dateObj = new Date(date);
+
+    const formattedDate = `${dateObj.getDate()}/${
+      dateObj.getMonth() + 1
+    }/${dateObj.getFullYear()}`;
+
+    return formattedDate;
+  };
+
   const clearFilters = () => {
     setFilteredInfo({});
   };
@@ -98,6 +108,7 @@ export default function TodoTable({
           <tr>
             <th>#</th>
             <th>Task Name</th>
+            <th>Added date</th>
             <th>Status</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -108,6 +119,7 @@ export default function TodoTable({
             <tr key={index}>
               <td>{index + 1}</td>
               <td>{todo.todo}</td>
+              <td>{formatDate(todo.date)}</td>
               <td>
                 <Dropdown
                   overlay={
