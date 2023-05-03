@@ -62,7 +62,7 @@ export default function Register() {
         registerInformation.password
       )
         .then(() => {
-          message.success("You have been successfully registered.", 2, () => {
+          message.success("You have been successfully registered.", 1, () => {
             navigate("/");
           });
         })

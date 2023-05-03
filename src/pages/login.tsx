@@ -39,7 +39,7 @@ export default function Login() {
     } else {
       signInWithEmailAndPassword(auth, email, password)
         .then(() => {
-          message.success("You have been successfully logged in.", 2, () => {
+          message.success("You have been successfully logged in.", 1, () => {
             navigate("/todo");
           });
         })
