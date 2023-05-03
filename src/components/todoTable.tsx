@@ -134,15 +134,7 @@ export default function TodoTable({
                 >
                   <a onClick={(e) => e.preventDefault()}>
                     <Space>
-                      <p
-                        color={
-                          todo.todoStatus.toString() == "doing"
-                            ? "green"
-                            : "blue"
-                        }
-                      >
-                        {todo.todoStatus.toString()}
-                      </p>
+                      <p>{todo.todoStatus}</p>
                       <DownOutlined />
                     </Space>
                   </a>
