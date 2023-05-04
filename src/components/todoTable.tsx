@@ -1,4 +1,4 @@
-import { Dropdown, Menu, message, Space, Button } from "antd";
+import { Dropdown, Menu, message, Space, Button, Tag } from "antd";
 import { useState } from "react";
 import { DownOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
@@ -110,8 +110,8 @@ export default function TodoTable({
             <th>Task Name</th>
             <th>Added date</th>
             <th>Status</th>
-            <th>Edit</th>
             <th>Delete</th>
+            <th>Edit</th>
           </tr>
         </thead>
         <tbody>
@@ -126,16 +126,32 @@ export default function TodoTable({
                     <Menu
                       onClick={(option) => handleOptionClick(todo.uid, option)}
                     >
-                      <Menu.Item key="doing">doing</Menu.Item>
-                      <Menu.Item key="done">done</Menu.Item>
-                      <Menu.Item key="not started">not started</Menu.Item>
+                      <Menu.Item key="doing">
+                        <Tag color="blue">doing</Tag>
+                      </Menu.Item>
+                      <Menu.Item key="done">
+                        <Tag color="green">done</Tag>
+                      </Menu.Item>
+                      <Menu.Item key="not started">
+                        <Tag color="red">not started</Tag>
+                      </Menu.Item>
                     </Menu>
                   }
                 >
                   <a onClick={(e) => e.preventDefault()}>
-                    <Space>
-                      <p>{todo.todoStatus}</p>
-                      <DownOutlined />
+                    <Space className="status_dropdown ">
+                      <Tag
+                        color={
+                          todo.todoStatus == "done"
+                            ? "green"
+                            : todo.todoStatus == "doing"
+                            ? "blue"
+                            : "red"
+                        }
+                      >
+                        {todo.todoStatus}
+                        <DownOutlined />
+                      </Tag>
                     </Space>
                   </a>
                 </Dropdown>

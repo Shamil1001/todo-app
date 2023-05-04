@@ -130,7 +130,9 @@
     color: white;
 } */
 
-
+.status_dropdown{
+    /* border: 1px solid black; */
+}
 
 .ant-card-body{
     display: flex;

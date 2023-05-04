@@ -139,6 +139,7 @@ export default function Todo() {
           <div className="todo_input">
             <Input
               className="add_input_form"
+              placeholder="Write your tasks here..."
               maxLength={20}
               minLength={5}
               type="text"
@@ -154,24 +155,24 @@ export default function Todo() {
             ) : (
               <div>
                 <Button type="primary" onClick={writeToDatabase}>
-                  Add
+                  Add task
                 </Button>
               </div>
             )}
           </div>
-
           <div className="todo_list">
             <Space>
               {/* <Card style={{ minWidth: "350px", maxWidth: "550px" }}> */}
-              <Card style={{ minWidth: "350px", width: "60vw" }}>
+              <Card style={{ minWidth: "500px", width: "100%" }}>
                 <div className="select-sort">
                   <Select
                     // defaultValue="date"
                     value={selectedOption}
-                    style={{ width: 150, marginBottom: 20 }}
+                    style={{ width: 160, marginBottom: 20 }}
                     onChange={handleChange}
+                    // placeholder="Select"
                   >
-                    <Option value="">Select option</Option>
+                    <Option value="">Select sort option</Option>
                     <Option value="date">Sort by date</Option>
                     <Option value="alphabet">Sort by alphabet</Option>
                   </Select>
