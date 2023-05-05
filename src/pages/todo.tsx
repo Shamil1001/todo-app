@@ -83,7 +83,7 @@ export default function Todo() {
   const writeToDatabase = () => {
     const uidd = uuidv4();
     const date = new Date().toString();
-    const todoStatus = "doing";
+    const todoStatus = "not started";
     if (todo.trim() !== "") {
       if (auth.currentUser && todo.length !== 0) {
         set(ref(db, `/${auth.currentUser.uid}/${uidd}`), {
@@ -101,6 +101,12 @@ export default function Todo() {
       alert("Please enter a valid input!");
       setTodo("");
       return;
+    }
+  };
+
+  const handleKeyDown = (event: any) => {
+    if (event.key === "Enter") {
+      writeToDatabase();
     }
   };
 
@@ -140,6 +146,7 @@ export default function Todo() {
             <Input
               className="add_input_form"
               placeholder="Write your tasks here..."
+              onKeyDown={handleKeyDown}
               maxLength={20}
               minLength={5}
               type="text"
