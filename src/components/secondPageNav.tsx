@@ -14,7 +14,7 @@ export default function SecondPageNavbar({
     <>
       <div className="nav_title">
         {/* <Link to="/" style={{ textDecoration: "none" }}> */}
-        <p className="todo_title">Todo List App</p>
+        {/* <p className="todo_title">Todo List App</p> */}
         <p className="userEmail">{userEmail}</p>
         <p onClick={handleSignOut} className="sign_out">
           Log out

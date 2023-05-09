@@ -25,7 +25,7 @@ export default function Todo() {
   const [deleteTodo, setDeleteTodo] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<any>("");
   const [selectedOption, setSelectedOption] = useState("");
-  const [filterOption, setFilterOption] = useState("");
+  const [filterOption, setFilterOption] = useState("all");
   const [inputError, setInputError] = useState<boolean>(false);
   const [data, setData] = useState<Todos[]>([]);
 
@@ -191,7 +191,7 @@ export default function Todo() {
           </div>
           <div className="todo_list">
             <Space>
-              <Card style={{ maxWidth: "900px", width: "100%" }}>
+              <Card style={{}}>
                 <div className="sort_filter">
                   <div className="select-sort">
                     <Select
@@ -217,7 +217,7 @@ export default function Todo() {
                   </div>
                   <div className="select-sort">
                     <Select
-                      // defaultValue="date"
+                      defaultValue="all"
                       value={filterOption}
                       style={{ width: 160, marginBottom: 20 }}
                       onChange={handleFilter}
