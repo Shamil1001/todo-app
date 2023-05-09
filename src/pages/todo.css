@@ -28,6 +28,19 @@
 
 }
 
+
+.todo_input_err{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 5px;
+}
+
+.error{
+    color: rgb(187, 12, 12);
+}
+
 .todo_input{
     display: flex;
     flex-direction: row;
@@ -39,7 +52,7 @@
 .todo_list{
     display: flex;
     flex-direction: column;
-    min-width: 250px;
+    /* min-width: 250px; */
     /* width: 15%; */
 }
 
@@ -124,14 +137,10 @@
     word-break: break-word;
 }
 
-
-/* .delete_btn:hover{
-    background-color: rgb(206, 17, 17);
-    color: white;
-} */
-
-.status_dropdown{
-    /* border: 1px solid black; */
+.sort_filter{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 }
 
 .ant-card-body{

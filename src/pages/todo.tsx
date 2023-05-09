@@ -25,6 +25,9 @@ export default function Todo() {
   const [deleteTodo, setDeleteTodo] = useState<boolean>(false);
   const [userEmail, setUserEmail] = useState<any>("");
   const [selectedOption, setSelectedOption] = useState("");
+  const [filterOption, setFilterOption] = useState("");
+  const [inputError, setInputError] = useState<boolean>(false);
+  const [data, setData] = useState<Todos[]>([]);
 
   function handleChange(value: string) {
     console.log(`selected ${value}`);
@@ -41,13 +44,23 @@ export default function Todo() {
         }
         return 0;
       });
-      setTodos(sorted);
-      // console.log(sorted);
+      setData(sorted);
     } else if (value == "date") {
       const sortedData = todos.sort((taskA: any, taskB: any) =>
         taskA.date.localeCompare(taskB.date)
       );
-      setTodos(sortedData);
+      setData(sortedData);
+    }
+  }
+
+  function handleFilter(value: string) {
+    console.log(value);
+    setFilterOption(value);
+    if (value !== "all") {
+      const filtered = todos.filter((todo: any) => todo.todoStatus == value);
+      setData(filtered);
+    } else {
+      setData(todos);
     }
   }
 
@@ -61,9 +74,11 @@ export default function Todo() {
           const data = snapshot.val();
 
           if (data !== null) {
+            console.log("obj", Object.values(data));
             Object.values(data).forEach((todo) => {
               setTodos((prev: any) => [...prev, todo]);
             });
+            setData(Object.values(data));
           }
         });
       } else if (!user) {
@@ -96,9 +111,11 @@ export default function Todo() {
         setTodoNum(todoNum + 1);
         console.log(todos);
         setTodo("");
+        setInputError(false);
       }
     } else {
-      alert("Please enter a valid input!");
+      setInputError(true);
+
       setTodo("");
       return;
     }
@@ -142,50 +159,91 @@ export default function Todo() {
       <div className="todo_list_page">
         <SecondPageNavbar userEmail={userEmail} handleSignOut={handleSignOut} />
         <div className="todo_container">
-          <div className="todo_input">
-            <Input
-              className="add_input_form"
-              placeholder="Write your tasks here..."
-              onKeyDown={handleKeyDown}
-              maxLength={20}
-              minLength={5}
-              type="text"
-              onChange={(e) => setTodo(e.target.value)}
-              value={todo}
-            />
-            {isEdit ? (
-              <div>
-                <Button type="primary" onClick={handleEditComfirm}>
-                  Confirm
-                </Button>
-              </div>
-            ) : (
-              <div>
-                <Button type="primary" onClick={writeToDatabase}>
-                  Add task
-                </Button>
-              </div>
-            )}
+          <div className="todo_input_err">
+            <div className="todo_input">
+              <Input
+                className="add_input_form"
+                placeholder="Write your tasks here..."
+                onKeyDown={handleKeyDown}
+                maxLength={20}
+                minLength={5}
+                type="text"
+                onChange={(e) => setTodo(e.target.value)}
+                value={todo}
+              />
+
+              {isEdit ? (
+                <div>
+                  <Button type="primary" onClick={handleEditComfirm}>
+                    Confirm
+                  </Button>
+                </div>
+              ) : (
+                <div>
+                  <Button type="primary" onClick={writeToDatabase}>
+                    Add task
+                  </Button>
+                </div>
+              )}
+            </div>
+
+            {inputError && <p className="error">Please enter a valid input!</p>}
           </div>
           <div className="todo_list">
             <Space>
-              {/* <Card style={{ minWidth: "350px", maxWidth: "550px" }}> */}
-              <Card style={{ minWidth: "500px", width: "100%" }}>
-                <div className="select-sort">
-                  <Select
-                    // defaultValue="date"
-                    value={selectedOption}
-                    style={{ width: 160, marginBottom: 20 }}
-                    onChange={handleChange}
-                    // placeholder="Select"
-                  >
-                    <Option value="">Select sort option</Option>
-                    <Option value="date">Sort by date</Option>
-                    <Option value="alphabet">Sort by alphabet</Option>
-                  </Select>
+              <Card style={{ maxWidth: "900px", width: "100%" }}>
+                <div className="sort_filter">
+                  <div className="select-sort">
+                    <Select
+                      // defaultValue="date"
+                      value={selectedOption}
+                      style={{ width: 160, marginBottom: 20 }}
+                      onChange={handleChange}
+                      // placeholder="Select"
+                    >
+                      <Option value="">Select sort option</Option>
+
+                      <Option
+                        value="alphabet"
+                        items="Sort by alphabet"
+                        children={undefined}
+                      ></Option>
+                      <Option
+                        value="date"
+                        items="Sort by date"
+                        children={undefined}
+                      ></Option>
+                    </Select>
+                  </div>
+                  <div className="select-sort">
+                    <Select
+                      // defaultValue="date"
+                      value={filterOption}
+                      style={{ width: 160, marginBottom: 20 }}
+                      onChange={handleFilter}
+                      // placeholder="Select"
+                    >
+                      <Option value="all">Select filter option</Option>
+                      <Option
+                        value="not started"
+                        items="Not started"
+                        children={undefined}
+                      ></Option>
+                      <Option
+                        value="doing"
+                        items="Doing"
+                        children={undefined}
+                      ></Option>
+                      <Option
+                        value="done"
+                        items="Done"
+                        children={undefined}
+                      ></Option>
+                    </Select>
+                  </div>
                 </div>
                 <TodoTable
-                  todos={todos}
+                  todos={data}
                   deleteConfirm={deleteConfirm}
                   handleUpdate={handleUpdate}
                   handleDelete={handleDelete}

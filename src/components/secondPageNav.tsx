@@ -17,7 +17,7 @@ export default function SecondPageNavbar({
         <p className="todo_title">Todo List App</p>
         <p className="userEmail">{userEmail}</p>
         <p onClick={handleSignOut} className="sign_out">
-          Sign out
+          Log out
         </p>
       </div>
     </>
