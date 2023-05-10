@@ -1,6 +1,3 @@
-import { useState } from "react";
-import Navbar from "./components/navbar";
-import Signup from "./components/signup";
 import Main from "./pages/home";
 import Register from "./pages/register";
 import Login from "./pages/login";
@@ -19,9 +16,6 @@ function App() {
           <Route path="/todo" element={<Todo />} />
         </Routes>
       </Router>
-
-      {/* <Navbar />
-      <Signup /> */}
     </div>
   );
 }

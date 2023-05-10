@@ -190,66 +190,64 @@ export default function Todo() {
             {inputError && <p className="error">Please enter a valid input!</p>}
           </div>
           <div className="todo_list">
-            <Space>
-              <Card style={{}}>
-                <div className="sort_filter">
-                  <div className="select-sort">
-                    <Select
-                      // defaultValue="date"
-                      value={selectedOption}
-                      style={{ width: 160, marginBottom: 20 }}
-                      onChange={handleChange}
-                      // placeholder="Select"
-                    >
-                      <Option value="">Select sort option</Option>
+            <Card className="cardd">
+              <div className="sort_filter">
+                <div className="select-sort">
+                  <Select
+                    // defaultValue="date"
+                    value={selectedOption}
+                    style={{ width: 160, marginBottom: 20 }}
+                    onChange={handleChange}
+                    // placeholder="Select"
+                  >
+                    <Option value="">Select sort option</Option>
 
-                      <Option
-                        value="alphabet"
-                        items="Sort by alphabet"
-                        children={undefined}
-                      ></Option>
-                      <Option
-                        value="date"
-                        items="Sort by date"
-                        children={undefined}
-                      ></Option>
-                    </Select>
-                  </div>
-                  <div className="select-sort">
-                    <Select
-                      defaultValue="all"
-                      value={filterOption}
-                      style={{ width: 160, marginBottom: 20 }}
-                      onChange={handleFilter}
-                      // placeholder="Select"
-                    >
-                      <Option value="all">Select filter option</Option>
-                      <Option
-                        value="not started"
-                        items="Not started"
-                        children={undefined}
-                      ></Option>
-                      <Option
-                        value="doing"
-                        items="Doing"
-                        children={undefined}
-                      ></Option>
-                      <Option
-                        value="done"
-                        items="Done"
-                        children={undefined}
-                      ></Option>
-                    </Select>
-                  </div>
+                    <Option
+                      value="alphabet"
+                      items="Sort by alphabet"
+                      children={undefined}
+                    ></Option>
+                    <Option
+                      value="date"
+                      items="Sort by date"
+                      children={undefined}
+                    ></Option>
+                  </Select>
                 </div>
-                <TodoTable
-                  todos={data}
-                  deleteConfirm={deleteConfirm}
-                  handleUpdate={handleUpdate}
-                  handleDelete={handleDelete}
-                />
-              </Card>
-            </Space>
+                <div className="select-sort">
+                  <Select
+                    defaultValue="all"
+                    value={filterOption}
+                    style={{ width: 160, marginBottom: 20 }}
+                    onChange={handleFilter}
+                    // placeholder="Select"
+                  >
+                    <Option value="all">Select filter option</Option>
+                    <Option
+                      value="not started"
+                      items="Not started"
+                      children={undefined}
+                    ></Option>
+                    <Option
+                      value="doing"
+                      items="Doing"
+                      children={undefined}
+                    ></Option>
+                    <Option
+                      value="done"
+                      items="Done"
+                      children={undefined}
+                    ></Option>
+                  </Select>
+                </div>
+              </div>
+              <TodoTable
+                todos={data}
+                deleteConfirm={deleteConfirm}
+                handleUpdate={handleUpdate}
+                handleDelete={handleDelete}
+              />
+            </Card>
           </div>
         </div>
       </div>
