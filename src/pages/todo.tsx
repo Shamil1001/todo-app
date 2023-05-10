@@ -196,7 +196,7 @@ export default function Todo() {
                   <Select
                     // defaultValue="date"
                     value={selectedOption}
-                    style={{ width: 160, marginBottom: 20 }}
+                    style={{ width: "160px", marginBottom: 20 }}
                     onChange={handleChange}
                     // placeholder="Select"
                   >
