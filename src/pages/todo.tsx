@@ -190,7 +190,8 @@ export default function Todo() {
             {inputError && <p className="error">Please enter a valid input!</p>}
           </div>
           <div className="todo_list">
-            <Card className="cardd">
+            {/* <Card className="cardd"> */}
+            <div className="cardd">
               <div className="sort_filter">
                 <div className="select-sort">
                   <Select
@@ -247,7 +248,8 @@ export default function Todo() {
                 handleUpdate={handleUpdate}
                 handleDelete={handleDelete}
               />
-            </Card>
+            </div>
+            {/* </Card> */}
           </div>
         </div>
       </div>
