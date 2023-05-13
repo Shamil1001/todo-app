@@ -103,7 +103,7 @@ export default function TodoTable({
   return (
     <>
       {/* <Table columns={columns} dataSource={data} onChange={onChange} />; */}
-      <table>
+      <table id="myTable">
         <thead>
           <tr>
             <th>#</th>

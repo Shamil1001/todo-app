@@ -58,7 +58,8 @@
 }
 
 .cardd{
-    /* width: 80%; */
+    /* width: 35%; */
+    /* min-width: 530px; */
     background-color: rgb(253, 253, 253);
     padding: 20px;
     border-radius: 10px;
@@ -78,11 +79,6 @@
     gap: 20px;
 }
 
-/* .btns_e{
-    display: flex;
-    justify-content: center;
-    
-} */
 
 .edit_btn{
     background: green;
@@ -173,7 +169,7 @@ table {
   }
   
   td {
-    border: 1px solid #dddddd;
+    /* border: 1px solid #dddddd; */
     text-align: left;
     padding: 8px;
     
@@ -187,3 +183,69 @@ th {
     text-align: center;
     padding: 8px;
   }
+
+/* @media  */
+
+@media (max-width: 600px) {
+    .cardd{
+        width: 80%;
+    }
+    #myTable{
+        width: 100%;
+    }
+    #myTable thead {
+      display: none; 
+    }
+
+    #myTable tbody td:nth-child(1){
+        display: none;
+    }
+    
+    #myTable tbody tr {
+      display: block; 
+      border-bottom: 1px solid #b4b4b4; 
+      margin-bottom: 10px; 
+      
+    }
+    
+    #myTable tbody{
+        /* width: 100%; */
+    }
+
+    #myTable tbody td {
+      display: block; 
+      text-align: left; 
+    }
+    .sort_filter{
+        border-bottom: 1px solid #b4b4b4;
+    }
+
+    #myTable tbody tr {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      
+      #myTable tbody  td {
+        flex: 1;
+      }
+      
+      #myTable tbody  tr td:last-child{
+        flex-basis: 50%;
+      }
+
+    
+      #myTable tbody  tr td{
+        flex-basis: 30%;
+      }
+
+  }
+
+  @media (max-width: 450px) {
+    .sort_filter{
+        display: flex;
+        flex-direction: column;
+        border-bottom: 1px solid #b4b4b4;
+    }
+  }
+  
+
