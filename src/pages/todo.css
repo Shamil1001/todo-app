@@ -169,7 +169,7 @@ table {
   }
   
   td {
-    /* border: 1px solid #dddddd; */
+    border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
     
@@ -227,6 +227,7 @@ th {
       
       #myTable tbody  td {
         flex: 1;
+        border: none
       }
       
       #myTable tbody  tr td:last-child{
