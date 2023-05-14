@@ -28,6 +28,13 @@ export default function Todo() {
   const [filterOption, setFilterOption] = useState("all");
   const [inputError, setInputError] = useState<boolean>(false);
   const [data, setData] = useState<Todos[]>([]);
+  const [arrow, setArrow] = useState("descending");
+
+  function handleArrow(value: string) {
+    setArrow(value);
+    const sorted = [...data].reverse();
+    setData(sorted);
+  }
 
   function handleChange(value: string) {
     console.log(`selected ${value}`);
@@ -244,6 +251,8 @@ export default function Todo() {
               </div>
               <TodoTable
                 todos={data}
+                arrow={arrow}
+                handleArrow={handleArrow}
                 deleteConfirm={deleteConfirm}
                 handleUpdate={handleUpdate}
                 handleDelete={handleDelete}

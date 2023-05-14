@@ -1,6 +1,5 @@
 import { Dropdown, Menu, message, Space, Button, Tag } from "antd";
 import { useState } from "react";
-import { DownOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
@@ -8,6 +7,11 @@ import { auth, db } from "../firebase";
 import { set, ref, onValue, remove, update } from "firebase/database";
 import type { TableProps } from "antd";
 import { Table } from "antd";
+import {
+  DownOutlined,
+  CaretDownOutlined,
+  CaretUpOutlined,
+} from "@ant-design/icons";
 import type {
   ColumnsType,
   FilterValue,
@@ -19,6 +23,8 @@ type TProps = {
   deleteConfirm: any;
   handleDelete: (todo: any) => void;
   handleUpdate: (todo: any) => void;
+  arrow: string;
+  handleArrow: any;
 };
 
 interface DataType {
@@ -57,6 +63,8 @@ export default function TodoTable({
   deleteConfirm,
   handleDelete,
   handleUpdate,
+  arrow,
+  handleArrow,
 }: TProps) {
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
@@ -107,7 +115,20 @@ export default function TodoTable({
         <thead>
           <tr>
             <th>#</th>
-            <th>Task Name</th>
+            <th className="task_name">
+              <p>Task Name</p>
+              {arrow == "descending" ? (
+                <CaretDownOutlined
+                  onClick={() => handleArrow("accending")}
+                  className="arrow"
+                />
+              ) : (
+                <CaretUpOutlined
+                  onClick={() => handleArrow("descending")}
+                  className="arrow"
+                />
+              )}
+            </th>
             <th>Added date</th>
             <th>Status</th>
             <th>Delete</th>

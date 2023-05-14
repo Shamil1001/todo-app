@@ -58,8 +58,8 @@
 }
 
 .cardd{
-    /* width: 35%; */
-    /* min-width: 530px; */
+    width: 35%;
+    min-width: 530px;
     background-color: rgb(253, 253, 253);
     padding: 20px;
     border-radius: 10px;
@@ -163,9 +163,9 @@ table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     
-    /* width: 50vw; */
+    /* width: 33vw; */
     /* table-layout: fixed; */
-    /* width: 100%; */
+    width: 100%;
   }
   
   td {
@@ -184,11 +184,32 @@ th {
     padding: 8px;
   }
 
-/* @media  */
+  #myTable thead th:nth-child(2){
+    display: flex;
+    flex-direction: row;
+  }
 
-@media (max-width: 600px) {
+  .arrow{
+    font-size: 15px;
+    color: #b4b4b4;
+    cursor: pointer;
+  }
+
+  .task_name{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .arrow:hover{
+    color: #616060;
+  }
+
+
+@media screen and (max-width: 600px) {
     .cardd{
         width: 80%;
+        min-width: 300px;
     }
     #myTable{
         width: 100%;
