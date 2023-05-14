@@ -225,18 +225,27 @@ th {
         flex-wrap: wrap;
       }
       
-      #myTable tbody  td {
-        flex: 1;
-        border: none
-      }
+        #myTable tbody  td {
+            flex: 1;
+            border: none
+        }
       
-      #myTable tbody  tr td:last-child{
+      #myTable tbody  tr td:nth-child(2){
+        flex-basis: 100%;
+      }
+      #myTable tbody  tr td:nth-child(3){
         flex-basis: 50%;
       }
 
-    
-      #myTable tbody  tr td{
-        flex-basis: 30%;
+      #myTable tbody  tr td:nth-child(4){
+        flex-basis: 50%;
+      }
+      #myTable tbody  tr td:nth-child(5){
+        flex-basis: 50%;
+        /* width: 100%; */
+      }
+      #myTable tbody  tr td:nth-child(6){
+        flex-basis: 50%;
       }
 
   }
