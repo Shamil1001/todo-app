@@ -139,7 +139,9 @@ export default function TodoTable({
           {todos.map((todo: any, index: number) => (
             <tr key={index}>
               <td>{index + 1}</td>
-              <td>{todo.todo}</td>
+              <td style={{ fontWeight: "bolder", color: "#3a3939" }}>
+                {todo.todo}
+              </td>
               <td>{formatDate(todo.date)}</td>
               <td>
                 <Dropdown
