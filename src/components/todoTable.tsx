@@ -1,4 +1,4 @@
-import { Dropdown, Menu, message, Space, Button, Tag } from "antd";
+import { Dropdown, Menu, message, Space, Button, Tag, Typography } from "antd";
 import { useState } from "react";
 import type { MenuProps } from "antd";
 import { MdOutlineDeleteOutline } from "react-icons/md";
@@ -11,6 +11,7 @@ import {
   DownOutlined,
   CaretDownOutlined,
   CaretUpOutlined,
+  FilterOutlined,
 } from "@ant-design/icons";
 import type {
   ColumnsType,
@@ -25,6 +26,10 @@ type TProps = {
   handleUpdate: (todo: any) => void;
   arrow: string;
   handleArrow: any;
+  arrow2: string;
+  handleArrow2: any;
+  setFilterOption: any;
+  handleFilter: any;
 };
 
 interface DataType {
@@ -43,21 +48,6 @@ const handleOptionClick = (element: string, option: any) => {
   }
 };
 
-const items: MenuProps["items"] = [
-  {
-    key: "1",
-    label: "Doing",
-  },
-  {
-    key: "2",
-    label: "Done",
-  },
-  {
-    key: "3",
-    label: "Not started",
-  },
-];
-
 export default function TodoTable({
   todos,
   deleteConfirm,
@@ -65,11 +55,47 @@ export default function TodoTable({
   handleUpdate,
   arrow,
   handleArrow,
+  arrow2,
+  handleArrow2,
+  setFilterOption,
+  handleFilter,
 }: TProps) {
   const [filteredInfo, setFilteredInfo] = useState<
     Record<string, FilterValue | null>
   >({});
   const [sortedInfo, setSortedInfo] = useState<SorterResult<DataType>>({});
+
+  const onClick: MenuProps["onClick"] = ({ key }) => {
+    // message.info(`Click on item ${key}`);
+    if (key == "0") {
+      handleFilter("all");
+    } else if (key == "1") {
+      handleFilter("doing");
+    } else if (key == "2") {
+      handleFilter("done");
+    } else {
+      handleFilter("not started");
+    }
+  };
+
+  const items: MenuProps["items"] = [
+    {
+      key: "0",
+      label: "All",
+    },
+    {
+      key: "1",
+      label: "Doing",
+    },
+    {
+      key: "2",
+      label: "Done",
+    },
+    {
+      key: "3",
+      label: "Not started",
+    },
+  ];
 
   const handleChange: TableProps<DataType>["onChange"] = (
     pagination,
@@ -115,22 +141,79 @@ export default function TodoTable({
         <thead>
           <tr>
             <th>#</th>
+
             <th className="task_name">
-              <p>Task Name</p>
-              {arrow == "descending" ? (
-                <CaretDownOutlined
-                  onClick={() => handleArrow("accending")}
-                  className="arrow"
-                />
-              ) : (
-                <CaretUpOutlined
-                  onClick={() => handleArrow("descending")}
-                  className="arrow"
-                />
-              )}
+              <p
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                Task Name{" "}
+                {arrow == "descending" ? (
+                  <CaretDownOutlined
+                    onClick={() => handleArrow("accending")}
+                    className="arrow"
+                  />
+                ) : (
+                  <CaretUpOutlined
+                    onClick={() => handleArrow("descending")}
+                    className="arrow"
+                  />
+                )}
+              </p>
             </th>
-            <th>Added date</th>
-            <th>Status</th>
+            <th className="added_date">
+              <p
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                Added date{" "}
+                {arrow2 == "descending" ? (
+                  <CaretDownOutlined
+                    onClick={() => handleArrow2("accending")}
+                    className="arrow"
+                  />
+                ) : (
+                  <CaretUpOutlined
+                    onClick={() => handleArrow2("descending")}
+                    className="arrow"
+                  />
+                )}
+              </p>
+            </th>
+
+            <th>
+              <p
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                Status
+                {
+                  <Dropdown
+                    menu={{
+                      items,
+                      selectable: true,
+                      defaultSelectedKeys: ["3"],
+                      onClick,
+                    }}
+                  >
+                    <Typography.Link onClick={(e) => e.preventDefault()}>
+                      <Space>
+                        <FilterOutlined />
+                      </Space>
+                    </Typography.Link>
+                  </Dropdown>
+                }
+              </p>
+            </th>
             <th>Delete</th>
             <th>Edit</th>
           </tr>

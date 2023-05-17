@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { set, ref, onValue, remove, update } from "firebase/database";
 import "./todo.css";
 import { Input, Button, Card, Space, Select } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 import SecondPageNavbar from "../components/secondPageNav";
 const { Option } = Select;
 import TodoTable from "../components/todoTable";
@@ -29,37 +30,76 @@ export default function Todo() {
   const [inputError, setInputError] = useState<boolean>(false);
   const [data, setData] = useState<Todos[]>([]);
   const [arrow, setArrow] = useState("descending");
+  const [arrow2, setArrow2] = useState("descending");
 
   function handleArrow(value: string) {
     setArrow(value);
-    const sorted = [...data].reverse();
-    setData(sorted);
-  }
 
-  function handleChange(value: string) {
-    console.log(`selected ${value}`);
-    setSelectedOption(value);
-    if (value == "alphabet") {
-      const sorted = todos.sort((a, b) => {
-        let titleA = a.todo.toUpperCase();
-        let titleB = b.todo.toUpperCase();
-        if (titleA < titleB) {
-          return -1;
-        }
-        if (titleA > titleB) {
-          return 1;
-        }
-        return 0;
-      });
-      setData(sorted);
-    } else if (value == "date") {
-      const sortedData = todos.sort((taskA: any, taskB: any) =>
-        taskA.date.localeCompare(taskB.date)
-      );
-      setData(sortedData);
+    const filtered = todos.filter(
+      (todo: any) => todo.todoStatus == filterOption
+    );
+    if (filterOption !== "all") {
+      if (value == "accending") {
+        const sorted = filtered.sort((a, b) => {
+          let titleA = a.todo.toUpperCase();
+          let titleB = b.todo.toUpperCase();
+          if (titleA < titleB) {
+            return -1;
+          }
+          if (titleA > titleB) {
+            return 1;
+          }
+          return 0;
+        });
+        setData(sorted.reverse());
+      } else {
+        setData(data.reverse());
+      }
+    } else {
+      if (value == "accending") {
+        const sorted = todos.sort((a, b) => {
+          let titleA = a.todo.toUpperCase();
+          let titleB = b.todo.toUpperCase();
+          if (titleA < titleB) {
+            return -1;
+          }
+          if (titleA > titleB) {
+            return 1;
+          }
+          return 0;
+        });
+        setData(sorted.reverse());
+      } else {
+        setData(data.reverse());
+      }
     }
   }
 
+  function handleArrow2(value: string) {
+    setArrow2(value);
+    const filtered = todos.filter(
+      (todo: any) => todo.todoStatus == filterOption
+    );
+    if (filterOption !== "all") {
+      if (value == "accending") {
+        const sortedData = filtered.sort((taskA: any, taskB: any) =>
+          taskA.date.localeCompare(taskB.date)
+        );
+        setData(sortedData.reverse());
+      } else {
+        setData(data.reverse());
+      }
+    } else {
+      if (value == "accending") {
+        const sortedData = todos.sort((taskA: any, taskB: any) =>
+          taskA.date.localeCompare(taskB.date)
+        );
+        setData(sortedData.reverse());
+      } else {
+        setData(data.reverse());
+      }
+    }
+  }
   function handleFilter(value: string) {
     console.log(value);
     setFilterOption(value);
@@ -199,29 +239,8 @@ export default function Todo() {
           <div className="todo_list">
             {/* <Card className="cardd"> */}
             <div className="cardd">
-              <div className="sort_filter">
-                <div className="select-sort">
-                  <Select
-                    // defaultValue="date"
-                    value={selectedOption}
-                    style={{ width: "160px", marginBottom: 20 }}
-                    onChange={handleChange}
-                    // placeholder="Select"
-                  >
-                    <Option value="">Select sort option</Option>
-
-                    <Option
-                      value="alphabet"
-                      items="Sort by alphabet"
-                      children={undefined}
-                    ></Option>
-                    <Option
-                      value="date"
-                      items="Sort by date"
-                      children={undefined}
-                    ></Option>
-                  </Select>
-                </div>
+              {/* <div className="sort_filter">
+                <div className="select-sort"></div>
                 <div className="select-sort">
                   <Select
                     defaultValue="all"
@@ -248,11 +267,15 @@ export default function Todo() {
                     ></Option>
                   </Select>
                 </div>
-              </div>
+              </div> */}
               <TodoTable
                 todos={data}
+                setFilterOption={setFilterOption}
+                handleFilter={handleFilter}
                 arrow={arrow}
                 handleArrow={handleArrow}
+                arrow2={arrow2}
+                handleArrow2={handleArrow2}
                 deleteConfirm={deleteConfirm}
                 handleUpdate={handleUpdate}
                 handleDelete={handleDelete}
