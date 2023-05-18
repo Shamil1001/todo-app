@@ -13,6 +13,10 @@
     
 }
 
+.login_main{
+    /* min-height: calc(100vh ); */
+}
+
 .logout_icon{
     color: rgb(0, 119, 255);
     font-size: 20px;

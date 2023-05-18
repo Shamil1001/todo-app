@@ -9,11 +9,11 @@
   box-sizing: border-box;
 }
 
-/* .App {
+.App {
   background-color: #9aa7ec;
-  height: 100%+100px;
+  min-height: calc(100vh);
     
-} */
+}
 
 .home_page {
   display: flex;
