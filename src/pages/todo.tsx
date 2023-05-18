@@ -12,7 +12,7 @@ const { Option } = Select;
 import TodoTable from "../components/todoTable";
 
 interface Todos {
-  todo: string;
+  todo: any;
 }
 
 export default function Todo() {
@@ -82,26 +82,31 @@ export default function Todo() {
     );
     if (filterOption !== "all") {
       if (value == "accending") {
-        const sortedData = filtered.sort((taskA: any, taskB: any) =>
-          taskA.date.localeCompare(taskB.date)
+        const ascendingDates: any[] = filtered.sort(
+          (a: any, b: any) =>
+            new Date(a.date).getTime() - new Date(b.date).getTime()
         );
-        setData(sortedData.reverse());
+        setData(ascendingDates);
       } else {
         setData(data.reverse());
       }
     } else {
       if (value == "accending") {
-        const sortedData = todos.sort((taskA: any, taskB: any) =>
-          taskA.date.localeCompare(taskB.date)
+        // const sortedData = todos.sort((taskA: any, taskB: any) =>
+        //   taskA.date.localeCompare(taskB.date)
+        // );
+        const ascendingDates: any[] = todos.sort(
+          (a: any, b: any) =>
+            new Date(a.date).getTime() - new Date(b.date).getTime()
         );
-        setData(sortedData.reverse());
+        setData(ascendingDates);
       } else {
         setData(data.reverse());
+        console.log(data);
       }
     }
   }
   function handleFilter(value: string) {
-    console.log(value);
     setFilterOption(value);
     if (value !== "all") {
       const filtered = todos.filter((todo: any) => todo.todoStatus == value);
@@ -121,7 +126,6 @@ export default function Todo() {
           const data = snapshot.val();
 
           if (data !== null) {
-            console.log("obj", Object.values(data));
             Object.values(data).forEach((todo) => {
               setTodos((prev: any) => [...prev, todo]);
             });
@@ -156,7 +160,6 @@ export default function Todo() {
         });
 
         setTodoNum(todoNum + 1);
-        console.log(todos);
         setTodo("");
         setInputError(false);
       }

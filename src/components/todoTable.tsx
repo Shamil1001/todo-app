@@ -5,19 +5,13 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { auth, db } from "../firebase";
 import { set, ref, onValue, remove, update } from "firebase/database";
-import type { TableProps } from "antd";
-import { Table } from "antd";
+
 import {
   DownOutlined,
   CaretDownOutlined,
   CaretUpOutlined,
   FilterOutlined,
 } from "@ant-design/icons";
-import type {
-  ColumnsType,
-  FilterValue,
-  SorterResult,
-} from "antd/es/table/interface";
 
 type TProps = {
   todos: any[];
@@ -31,13 +25,6 @@ type TProps = {
   setFilterOption: any;
   handleFilter: any;
 };
-
-interface DataType {
-  key: React.Key;
-  name: string;
-  age: number;
-  address: string;
-}
 
 const handleOptionClick = (element: string, option: any) => {
   console.log(option.key);
@@ -60,11 +47,6 @@ export default function TodoTable({
   setFilterOption,
   handleFilter,
 }: TProps) {
-  const [filteredInfo, setFilteredInfo] = useState<
-    Record<string, FilterValue | null>
-  >({});
-  const [sortedInfo, setSortedInfo] = useState<SorterResult<DataType>>({});
-
   const onClick: MenuProps["onClick"] = ({ key }) => {
     // message.info(`Click on item ${key}`);
     if (key == "0") {
@@ -97,16 +79,6 @@ export default function TodoTable({
     },
   ];
 
-  const handleChange: TableProps<DataType>["onChange"] = (
-    pagination,
-    filters,
-    sorter
-  ) => {
-    console.log("Various parameters", pagination, filters, sorter);
-    setFilteredInfo(filters);
-    setSortedInfo(sorter as SorterResult<DataType>);
-  };
-
   const formatDate = (date: string) => {
     const dateObj = new Date(date);
 
@@ -117,23 +89,6 @@ export default function TodoTable({
     return formattedDate;
   };
 
-  const clearFilters = () => {
-    setFilteredInfo({});
-  };
-
-  const clearAll = () => {
-    setFilteredInfo({});
-    setSortedInfo({});
-  };
-
-  const setAgeSort = () => {
-    setSortedInfo({
-      order: "descend",
-      columnKey: "age",
-    });
-  };
-
-  console.log(todos);
   return (
     <>
       {/* <Table columns={columns} dataSource={data} onChange={onChange} />; */}
@@ -185,7 +140,7 @@ export default function TodoTable({
                   />
                 )}
               </p>
-            </th> 
+            </th>
 
             <th>
               <p
