@@ -237,37 +237,7 @@ export default function Todo() {
             {inputError && <p className="error">Please enter a valid input!</p>}
           </div>
           <div className="todo_list">
-            {/* <Card className="cardd"> */}
             <div className="cardd">
-              {/* <div className="sort_filter">
-                <div className="select-sort"></div>
-                <div className="select-sort">
-                  <Select
-                    defaultValue="all"
-                    value={filterOption}
-                    style={{ width: 160, marginBottom: 20 }}
-                    onChange={handleFilter}
-                    // placeholder="Select"
-                  >
-                    <Option value="all">Select filter option</Option>
-                    <Option
-                      value="not started"
-                      items="Not started"
-                      children={undefined}
-                    ></Option>
-                    <Option
-                      value="doing"
-                      items="Doing"
-                      children={undefined}
-                    ></Option>
-                    <Option
-                      value="done"
-                      items="Done"
-                      children={undefined}
-                    ></Option>
-                  </Select>
-                </div>
-              </div> */}
               <TodoTable
                 todos={data}
                 setFilterOption={setFilterOption}

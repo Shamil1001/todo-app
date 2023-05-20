@@ -185,7 +185,7 @@ export default function TodoTable({
                   />
                 )}
               </p>
-            </th>
+            </th> 
 
             <th>
               <p

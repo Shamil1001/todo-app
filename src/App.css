@@ -9,20 +9,18 @@
   box-sizing: border-box;
 }
 
-.App {
+/* .App {
   background-color: #9aa7ec;
-  /* width: 100vw; */
-  height: 100vh;
+  height: 100%+100px;
     
-  /* max-width: 100%; */
-  /* min-width: 100vw; */
-  /* overflow: scroll; */
-}
+} */
 
 .home_page {
   display: flex;
   flex-direction: row;
-  /* width: 100%; */
+  background-color: #9aa7ec;
+  height: 100%+100px;
+  
 }
 .signup_left {
   width: 50%;
@@ -43,3 +41,11 @@
       /* min-width: 110vw; */
     }
 }
+
+/* @media (max-height: 600px) {
+  .App {
+    background-color: #0c2bc7;
+    height: 100vh;
+      
+  }
+} */
