@@ -5,9 +5,12 @@
 }
 
 .todo_list_page{
-    height: calc(100vh+100%);
-    background-color: #616060;
-    margin-bottom: 100px;
+    /* height: calc(100vh+100%); */
+    background-color: #9aa7ec;
+    background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+    
 }
 
 .logout_icon{
@@ -25,7 +28,8 @@
 }
 
 .todo_container{
-    /* width: 100%; */
+    
+     min-height: calc(100vh - 100px);
     display: flex;
     align-items: center;
     flex-direction: column;
